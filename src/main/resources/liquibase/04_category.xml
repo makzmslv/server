@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="mk3" id="1">
+        <!--                                 -->
+        <!-- CATEGORY -->
+        <!--                                 -->
+        <createTable tableName="CATEGORY" remarks="CATEGORY">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="CATEGORY_PK" nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="REF_HOTEL" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="FK_CATEGORY_REF_HOTEL" baseTableName="CATEGORY" baseColumnNames="REF_HOTEL" referencedTableName="HOTELS" referencedColumnNames="ID"/>
+    </changeSet>
+
+    <changeSet author="mk3" id="2">
+        <!--                                 -->
+        <!-- SUB_CATEGORY -->
+        <!--                                 -->
+        <createTable tableName="SUB_CATEGORY" remarks="SUB_CATEGORY">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="SUB_CATEGORY_PK" nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="REF_CATEGORY" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="COST" type="DECIMAL(4, 2)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="FK_SUB_CATEGORY_REF_CATEGORY" baseTableName="SUB_CATEGORY" baseColumnNames="SUB_CATEGORY" referencedTableName="CATEGORY" referencedColumnNames="ID"/>
+    </changeSet>
+</databaseChangeLog>

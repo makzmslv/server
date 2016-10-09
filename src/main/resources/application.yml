@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: Backend-Server
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+
+liquibase:
+  enabled: true
+  change-log: classpath:/liquibase/master.xml
+
+swagger:
+  documentation:
+    version: 1
+
+error:
+  path: /mvc-error
+
+management:
+  context-path: /actuator
+
+endpoints:
+  shutdown:
+    enabled: true
+
+server:
+  port: 8080
