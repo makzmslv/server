@@ -7,13 +7,13 @@ import backend.business.enums.ErrorCodes;
 import backend.business.error.ErrorMessage;
 import backend.business.error.ServerException;
 import backend.db.dao.CategoryDAO;
-import backend.db.dao.MenuDAO;
+import backend.db.dao.MenuItemListDAO;
 import backend.db.dao.MenuItemDAO;
 import backend.db.dao.OrderDAO;
 import backend.db.dao.OrderDetailsDAO;
 import backend.db.dao.TableDAO;
 import backend.db.entity.CategoryEntity;
-import backend.db.entity.MenuEntity;
+import backend.db.entity.MenuEntriesEntity;
 import backend.db.entity.MenuItemEntity;
 import backend.db.entity.OrderDetailsEntity;
 import backend.db.entity.OrderEntity;
@@ -29,7 +29,7 @@ public class EntryExistingValidator
     private CategoryDAO categoryDAO;
 
     @Autowired
-    private MenuDAO menuDAO;
+    private MenuItemListDAO menuItemListDAO;
 
     @Autowired
     private MenuItemDAO menuItemDAO;
@@ -60,9 +60,9 @@ public class EntryExistingValidator
         return menuItem;
     }
 
-    public MenuEntity getMenuEntityFromId(Integer menuEntryId)
+    public MenuEntriesEntity getMenuEntityFromId(Integer menuEntryId)
     {
-        MenuEntity menuEntry = menuDAO.findOne(menuEntryId);
+        MenuEntriesEntity menuEntry = menuItemListDAO.findOne(menuEntryId);
         if (menuEntry == null)
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.MENU_ENTRY_NOT_FOUND));

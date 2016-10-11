@@ -20,14 +20,11 @@
             <column name="CONTACT_NO" type="DECIMAL(10, 0)">
                 <constraints nullable="true"/>
             </column>
-            <column name="DELIVERY_TIME" type="INTEGER">
-                <constraints nullable="false"/>
-            </column>
             <column name="COST" type="DECIMAL(5, 2)">
                 <constraints nullable="true"/>
             </column>
             <column name="AREA" type="VARCHAR(50)">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="IMAGE" type="LONGBLOB">
                 <constraints nullable="true"/>
@@ -39,7 +36,7 @@
                 <constraints nullable="true"/>
             </column>
             <column name="REF_CITY" type="INTEGER">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
         </createTable>
         <addForeignKeyConstraint constraintName="FK_HOTELS_REF_CITY" baseTableName="HOTELS" baseColumnNames="REF_CITY" referencedTableName="CITY" referencedColumnNames="ID"/>

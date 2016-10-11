@@ -64,7 +64,7 @@ public class MenuItemController
         }
         if (uncategorized != null)
         {
-            menuItemService.findAllUncategorizedItems(uncategorized);
+//            menuItemService.findAllUncategorizedItems(uncategorized);
         }
         return menuItemService.findAll();
     }

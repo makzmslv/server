@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import backend.business.dto.HotelMenuDTO;
 import backend.business.dto.MenuCreateDTO;
 import backend.business.dto.MenuDTO;
 import backend.business.dto.MenuUpdateDTO;
@@ -15,9 +16,13 @@ import backend.business.enums.ErrorCodes;
 import backend.business.error.ErrorMessage;
 import backend.business.error.ServerException;
 import backend.business.library.UtilHelper;
-import backend.db.dao.MenuDAO;
+import backend.db.dao.HotelDAO;
+import backend.db.dao.HotelMenuDAO;
+import backend.db.dao.MenuItemListDAO;
 import backend.db.entity.CategoryEntity;
-import backend.db.entity.MenuEntity;
+import backend.db.entity.HotelEntity;
+import backend.db.entity.HotelMenuEntity;
+import backend.db.entity.MenuEntriesEntity;
 import backend.db.entity.MenuItemEntity;
 
 @Service
@@ -25,7 +30,13 @@ import backend.db.entity.MenuItemEntity;
 public class MenuServiceImpl
 {
     @Autowired
-    private MenuDAO menuDAO;
+    private MenuItemListDAO menuItemListDAO;
+
+    @Autowired
+    private HotelMenuDAO hotelMenuDAO;
+
+    @Autowired
+    private HotelDAO hotelDAO;
 
     @Autowired
     private EntryExistingValidator validator;
@@ -33,8 +44,25 @@ public class MenuServiceImpl
     @Autowired
     private Mapper mapper;
 
-    public List<MenuDTO> createMenuEntries(List<MenuCreateDTO> createDTOs)
+    public HotelMenuDTO createHotelMenuEntry(Integer hotelId)
     {
+        HotelEntity hotel = hotelDAO.findOne(hotelId);
+        if(hotel == null)
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.HOTEL_MENU_ENTRY_NOT_FOUND));
+        }
+        HotelMenuEntity hotelMenu = new HotelMenuEntity();
+        hotelMenu.setHotel(hotel);
+        hotelMenu = hotelMenuDAO.save(hotelMenu);
+        return mapper.map(hotelMenu, HotelMenuDTO.class);
+    }
+    public List<MenuDTO> createMenuEntries(Integer hotelMenuId, List<MenuCreateDTO> createDTOs)
+    {
+        HotelMenuEntity hotelMenu = hotelMenuDAO.findOne(hotelMenuId);
+        if(hotelMenu == null)
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.HOTEL_MENU_ENTRY_NOT_FOUND));
+        }
         if (createDTOs.isEmpty())
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.NO_FIELDS_UPDATED));
@@ -46,37 +74,37 @@ public class MenuServiceImpl
             MenuItemEntity menuItemEntity = validator.getMenuItemEntityFromId(menuItem.getMenuItemId());
             checkIfInActive(categoryEntity, menuItemEntity);
             checkIfMenuEntryAlreadyExists(categoryEntity, menuItemEntity);
-            MenuEntity menuEntity = createMenuEntryEntity(categoryEntity, menuItemEntity);
-            menuEntity = menuDAO.save(menuEntity);
-            menuEntries.add(mapper.map(menuEntity, MenuDTO.class));
+            MenuEntriesEntity menuEntriesEntity = createMenuEntryEntity(hotelMenu, categoryEntity, menuItemEntity);
+            menuEntriesEntity = menuItemListDAO.save(menuEntriesEntity);
+            menuEntries.add(mapper.map(menuEntriesEntity, MenuDTO.class));
         }
         return menuEntries;
     }
 
     public MenuDTO updateMenuEntry(Integer menuEntryId, MenuUpdateDTO updateDTO)
     {
-        MenuEntity menuEntity = validator.getMenuEntityFromId(menuEntryId);
-        checkIfFieldsAreUpdated(menuEntity, updateDTO);
+        MenuEntriesEntity menuEntriesEntity = validator.getMenuEntityFromId(menuEntryId);
+        checkIfFieldsAreUpdated(menuEntriesEntity, updateDTO);
         CategoryEntity categoryEntity = validator.getCategoryEntityFromId(updateDTO.getCategoryId());
         MenuItemEntity menuItemEntity = validator.getMenuItemEntityFromId(updateDTO.getMenuItemId());
         checkIfInActive(categoryEntity, menuItemEntity);
         checkIfMenuEntryAlreadyExists(categoryEntity, menuItemEntity);
-        menuEntity.setCategory(categoryEntity);
-        menuEntity.setMenuItem(menuItemEntity);
-        menuEntity = menuDAO.save(menuEntity);
-        return mapper.map(menuEntity, MenuDTO.class);
+        menuEntriesEntity.setCategory(categoryEntity);
+        menuEntriesEntity.setMenuItem(menuItemEntity);
+        menuEntriesEntity = menuItemListDAO.save(menuEntriesEntity);
+        return mapper.map(menuEntriesEntity, MenuDTO.class);
     }
 
     public List<MenuDTO> getMenuEntries()
     {
-        List<MenuEntity> menuEntries = menuDAO.findAll();
+        List<MenuEntriesEntity> menuEntries = menuItemListDAO.findAll();
         return UtilHelper.mapListOfEnitiesToDTOs(mapper, menuEntries, MenuDTO.class);
     }
 
     public void deleteMenuEntry(Integer menuEntryId)
     {
-        MenuEntity menuEntity = validator.getMenuEntityFromId(menuEntryId);
-        menuDAO.delete(menuEntity);
+        MenuEntriesEntity menuEntriesEntity = validator.getMenuEntityFromId(menuEntryId);
+        menuItemListDAO.delete(menuEntriesEntity);
     }
 
     private void checkIfInActive(CategoryEntity categoryEntity, MenuItemEntity menuItemEntity)
@@ -93,27 +121,28 @@ public class MenuServiceImpl
 
     private void checkIfMenuEntryAlreadyExists(CategoryEntity categoryEntity, MenuItemEntity menuItemEntity)
     {
-        MenuEntity menuEntity = menuDAO.findByMenuItemAndCategory(menuItemEntity, categoryEntity);
-        if (menuEntity != null)
+        MenuEntriesEntity menuEntriesEntity = menuItemListDAO.findByMenuItemAndCategory(menuItemEntity, categoryEntity);
+        if (menuEntriesEntity != null)
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.MENU_ENTRY_ALREADY_EXISTS));
         }
     }
 
-    private void checkIfFieldsAreUpdated(MenuEntity menuEntity, MenuUpdateDTO updateDTO)
+    private void checkIfFieldsAreUpdated(MenuEntriesEntity menuEntriesEntity, MenuUpdateDTO updateDTO)
     {
-        if (menuEntity.getCategory().getId() == updateDTO.getCategoryId() && menuEntity.getMenuItem().getId() == updateDTO.getMenuItemId())
+        if (menuEntriesEntity.getCategory().getId() == updateDTO.getCategoryId() && menuEntriesEntity.getMenuItem().getId() == updateDTO.getMenuItemId())
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.NO_FIELDS_UPDATED));
         }
 
     }
 
-    private MenuEntity createMenuEntryEntity(CategoryEntity categoryEntity, MenuItemEntity menuItemEntity)
+    private MenuEntriesEntity createMenuEntryEntity(HotelMenuEntity hotelMenu, CategoryEntity categoryEntity, MenuItemEntity menuItemEntity)
     {
-        MenuEntity menuEntity = new MenuEntity();
-        menuEntity.setCategory(categoryEntity);
-        menuEntity.setMenuItem(menuItemEntity);
-        return menuEntity;
+        MenuEntriesEntity menuEntriesEntity = new MenuEntriesEntity();
+        menuEntriesEntity.setCategory(categoryEntity);
+        menuEntriesEntity.setMenuItem(menuItemEntity);
+        menuEntriesEntity.setHotelMenu(hotelMenu);
+        return menuEntriesEntity;
     }
 }

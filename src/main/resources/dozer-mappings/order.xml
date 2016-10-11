@@ -7,8 +7,8 @@
     <!--                                  -->
 
     <mapping>
-        <class-a>com.focus.foodtab.persistence.entity.OrderEntity</class-a>
-        <class-b>com.focus.foodtab.dto.order.OrderDTO</class-b>
+        <class-a>backend.db.entity.OrderEntity</class-a>
+        <class-b>backend.business.dto.OrderDTO</class-b>
 
         <field>
             <a>id</a>
@@ -29,8 +29,8 @@
     <!--                                  -->
 
     <mapping>
-        <class-a>com.focus.foodtab.persistence.entity.OrderDetailsEntity</class-a>
-        <class-b>com.focus.foodtab.dto.order.OrderDetailsDTO</class-b>
+        <class-a>backend.db.entity.OrderDetailsEntity</class-a>
+        <class-b>backend.business.dto.OrderDetailsDTO</class-b>
 
         <field>
             <a>id</a>

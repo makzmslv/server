@@ -12,8 +12,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "MENU")
-public class MenuEntity implements Serializable
+@Table(name = "MENU_ITEM_LIST")
+public class MenuEntriesEntity implements Serializable
 {
     private static final long serialVersionUID = 1L;
 
@@ -29,6 +29,20 @@ public class MenuEntity implements Serializable
     @OneToOne
     @JoinColumn(name = "REF_CATEGORY")
     private CategoryEntity category;
+
+    @OneToOne
+    @JoinColumn(name = "REF_MENU_HOTEL")
+    private HotelMenuEntity hotelMenu;
+
+    public HotelMenuEntity getHotelMenu()
+    {
+        return hotelMenu;
+    }
+
+    public void setHotelMenu(HotelMenuEntity hotelMenu)
+    {
+        this.hotelMenu = hotelMenu;
+    }
 
     public int getId()
     {

@@ -1,5 +1,6 @@
 package backend.server.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.dozer.Mapper;
@@ -14,9 +15,9 @@ import backend.business.enums.ErrorCodes;
 import backend.business.error.ErrorMessage;
 import backend.business.error.ServerException;
 import backend.business.library.UtilHelper;
-import backend.db.dao.MenuDAO;
+import backend.db.dao.MenuItemListDAO;
 import backend.db.dao.MenuItemDAO;
-import backend.db.entity.MenuEntity;
+import backend.db.entity.MenuEntriesEntity;
 import backend.db.entity.MenuItemEntity;
 import backend.db.entity.MenuItemUnitEntity;
 
@@ -27,7 +28,7 @@ public class MenuItemServiceImpl
     private MenuItemDAO menuItemDAO;
 
     @Autowired
-    private MenuDAO menuDAO;
+    private MenuItemListDAO menuItemListDAO;
 
     @Autowired
     private EntryExistingValidator validator;
@@ -56,7 +57,7 @@ public class MenuItemServiceImpl
     public MenuItemDTO updateMenuItemActiveStatus(Integer menuItemId, MenuItemUpdateActiveStatusDTO updateDTO)
     {
         MenuItemEntity menuItem = validator.getMenuItemEntityFromId(menuItemId);
-        List<MenuEntity> menuEntries = menuDAO.findByMenuItem(menuItem);
+        List<MenuEntriesEntity> menuEntries = menuItemListDAO.findByMenuItem(menuItem);
         if (!menuEntries.isEmpty())
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.MENU_ITEM_IN_USE));
@@ -74,7 +75,7 @@ public class MenuItemServiceImpl
 
     public List<MenuItemDTO> findAllUncategorizedItems(Boolean active)
     {
-        List<Integer> menuItemIds = menuDAO.getMenuItemIds();
+        List<Integer> menuItemIds = new ArrayList<Integer>();//.getMenuItemIds();
         List<MenuItemEntity> menuItems = menuItemDAO.findByActiveAndIdNotIn(active, menuItemIds);
         return UtilHelper.mapListOfEnitiesToDTOs(mapper, menuItems, MenuItemDTO.class);
     }
@@ -88,10 +89,10 @@ public class MenuItemServiceImpl
     public void deleteMenuItem(Integer menuItemId)
     {
         MenuItemEntity menuItem = validator.getMenuItemEntityFromId(menuItemId);
-        List<MenuEntity> itemsInMenu = menuDAO.findByMenuItem(menuItem);
-        for (MenuEntity item : itemsInMenu)
+        List<MenuEntriesEntity> itemsInMenu = menuItemListDAO.findByMenuItem(menuItem);
+        for (MenuEntriesEntity item : itemsInMenu)
         {
-            menuDAO.delete(item);
+            menuItemListDAO.delete(item);
         }
         menuItemDAO.delete(menuItem);
     }

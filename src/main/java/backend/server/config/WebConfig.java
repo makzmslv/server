@@ -67,10 +67,10 @@ public class WebConfig extends WebMvcConfigurerAdapter
     public Mapper mapper()
     {
         List<String> mappingFiles = new ArrayList<String>();
-        mappingFiles.add("bill.xml");
-        mappingFiles.add("menu.xml");
-        mappingFiles.add("order.xml");
-        mappingFiles.add("menuItem.xml");
+        mappingFiles.add("dozer-mappings/bill.xml");
+        mappingFiles.add("dozer-mappings/menu.xml");
+        mappingFiles.add("dozer-mappings/order.xml");
+        mappingFiles.add("dozer-mappings/menuItem.xml");
         return new DozerBeanMapper(mappingFiles);
     }
 

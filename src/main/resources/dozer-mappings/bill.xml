@@ -7,8 +7,8 @@
     <!--                                  -->
 
     <mapping>
-        <class-a>com.focus.foodtab.persistence.entity.BillEntity</class-a>
-        <class-b>com.focus.foodtab.dto.bill.BillDTO</class-b>
+        <class-a>backend.db.entity.BillEntity</class-a>
+        <class-b>backend.business.dto.BillDTO</class-b>
 
         <field>
             <a>id</a>

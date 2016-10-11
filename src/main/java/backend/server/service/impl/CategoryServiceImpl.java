@@ -20,9 +20,9 @@ import backend.business.error.ErrorMessage;
 import backend.business.error.ServerException;
 import backend.business.library.UtilHelper;
 import backend.db.dao.CategoryDAO;
-import backend.db.dao.MenuDAO;
+import backend.db.dao.MenuItemListDAO;
 import backend.db.entity.CategoryEntity;
-import backend.db.entity.MenuEntity;
+import backend.db.entity.MenuEntriesEntity;
 
 @Service
 @Transactional
@@ -32,7 +32,7 @@ public class CategoryServiceImpl
     private CategoryDAO categoryDAO;
 
     @Autowired
-    private MenuDAO menuDAO;
+    private MenuItemListDAO menuItemListDAO;
 
     @Autowired
     private EntryExistingValidator validator;
@@ -72,7 +72,7 @@ public class CategoryServiceImpl
     public CategoryDTO updateCategoryActiveStatus(Integer categoryId, CategoryUpdateActiveStatusDTO updateDTO)
     {
         CategoryEntity categoryEntity = validator.getCategoryEntityFromId(categoryId);
-        List<MenuEntity> menuEntries = menuDAO.findByCategory(categoryEntity);
+        List<MenuEntriesEntity> menuEntries = menuItemListDAO.findByCategory(categoryEntity);
         if (!menuEntries.isEmpty())
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_IN_USE));
@@ -108,7 +108,7 @@ public class CategoryServiceImpl
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_IN_USE));
         }
-        List<MenuEntity> menu = menuDAO.findByCategory(category);
+        List<MenuEntriesEntity> menu = menuItemListDAO.findByCategory(category);
         if (!menu.isEmpty())
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_IN_USE));

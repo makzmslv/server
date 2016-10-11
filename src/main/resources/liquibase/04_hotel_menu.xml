@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <!-- MENU_HOTEL -->
+    <changeSet author="mk3" id="1">
+        <createTable tableName="MENU_HOTEL" remarks="MENU_HOTEL">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="MENU_HOTEL_PK" nullable="false"/>
+            </column>
+            <column name="REF_HOTEL" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="FK_MENU_HOTEL_REF_HOTEL" baseTableName="MENU_HOTEL" baseColumnNames="REF_HOTEL" referencedTableName="HOTELS" referencedColumnNames="ID"/>
+    </changeSet>
+</databaseChangeLog>

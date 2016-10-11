@@ -31,7 +31,7 @@ public class SwaggerConfig
     {
         // @formatter:off
         return new Docket(DocumentationType.SWAGGER_2)
-            .apiInfo(new ApiInfo("Points", "REST services", apiVersion, null, null, null, null))
+            .apiInfo(new ApiInfo("Backend", "REST services", apiVersion, null, null, null, null))
             .directModelSubstitute(org.joda.time.LocalDate.class, LocalDate.class)
             .directModelSubstitute(org.joda.time.LocalTime.class, LocalTime.class)
             .directModelSubstitute(org.joda.time.LocalDateTime.class, LocalDateTime.class)

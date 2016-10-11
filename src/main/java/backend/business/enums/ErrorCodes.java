@@ -35,6 +35,7 @@ public enum ErrorCodes
     // menu
     MENU_ENTRY_NOT_FOUND(401, "Menu Entry not found"),
     MENU_ENTRY_ALREADY_EXISTS(402, "Menu Entry already exists"),
+    HOTEL_MENU_ENTRY_NOT_FOUND(403, "Hotel Menu Entry not found"),
 
     // order
     ORDER_DOES_NOT_EXIST(501, "Order does not exist"),

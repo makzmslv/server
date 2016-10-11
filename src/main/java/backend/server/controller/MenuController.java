@@ -28,9 +28,9 @@ public class MenuController
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public List<MenuDTO> createMenuEntry(@Valid @RequestBody List<MenuCreateDTO> createDTO)
+    public List<MenuDTO> createMenuEntry(@Valid @PathVariable Integer hotelId, @RequestBody List<MenuCreateDTO> createDTO)
     {
-        return menuService.createMenuEntries(createDTO);
+        return menuService.createMenuEntries(hotelId, createDTO);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
