@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import backend.business.dto.HotelMenuDTO;
+import backend.business.dto.CategoryDTO;
+import backend.business.dto.MenuCategoryDTO;
 import backend.business.dto.MenuCreateDTO;
 import backend.business.dto.MenuDTO;
+import backend.business.dto.MenuItemDTO;
 import backend.business.dto.MenuUpdateDTO;
 import backend.business.enums.ErrorCodes;
 import backend.business.error.ErrorMessage;
@@ -44,21 +46,14 @@ public class MenuServiceImpl
     @Autowired
     private Mapper mapper;
 
-    public HotelMenuDTO createHotelMenuEntry(Integer hotelId)
+    public List<MenuDTO> createMenuEntries(Integer hotelId, List<MenuCreateDTO> createDTOs)
     {
         HotelEntity hotel = hotelDAO.findOne(hotelId);
         if(hotel == null)
         {
-            throw new ServerException(new ErrorMessage(ErrorCodes.HOTEL_MENU_ENTRY_NOT_FOUND));
+            throw new ServerException(new ErrorMessage(ErrorCodes.HOTEL_NOT_FOUND));
         }
-        HotelMenuEntity hotelMenu = new HotelMenuEntity();
-        hotelMenu.setHotel(hotel);
-        hotelMenu = hotelMenuDAO.save(hotelMenu);
-        return mapper.map(hotelMenu, HotelMenuDTO.class);
-    }
-    public List<MenuDTO> createMenuEntries(Integer hotelMenuId, List<MenuCreateDTO> createDTOs)
-    {
-        HotelMenuEntity hotelMenu = hotelMenuDAO.findOne(hotelMenuId);
+        HotelMenuEntity hotelMenu = hotelMenuDAO.findByHotel(hotel);
         if(hotelMenu == null)
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.HOTEL_MENU_ENTRY_NOT_FOUND));
@@ -95,10 +90,30 @@ public class MenuServiceImpl
         return mapper.map(menuEntriesEntity, MenuDTO.class);
     }
 
-    public List<MenuDTO> getMenuEntries()
+    public MenuDTO getMenuEntriesForHotel(Integer hotelId)
     {
-        List<MenuEntriesEntity> menuEntries = menuItemListDAO.findAll();
-        return UtilHelper.mapListOfEnitiesToDTOs(mapper, menuEntries, MenuDTO.class);
+        HotelEntity hotel = hotelDAO.findOne(hotelId);
+        if(hotel == null)
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.HOTEL_NOT_FOUND));
+        }
+        HotelMenuEntity hotelMenu = hotelMenuDAO.findByHotel(hotel);
+        if(hotelMenu == null)
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.HOTEL_MENU_ENTRY_NOT_FOUND));
+        }
+        List<MenuCategoryDTO> menuCategories = new ArrayList<MenuCategoryDTO>();
+        List<MenuEntriesEntity> menuEntries = menuItemListDAO.findByHotelMenuOrderByCategoryDisplayRankAsc(hotelMenu);
+        for (MenuEntriesEntity menuEntriesEntity : menuEntries)
+        {
+            MenuCategoryDTO menuCategory =  new MenuCategoryDTO();
+            menuCategory.setCategory(mapper.map(menuEntriesEntity.getCategory(), CategoryDTO.class));
+            menuCategory.setMenuItems(UtilHelper.mapListOfEnitiesToDTOs(mapper, menuItemListDAO.getMenuItemsByCategory(menuEntriesEntity.getCategory()), MenuItemDTO.class));
+            menuCategories.add(menuCategory);
+        }
+        MenuDTO menu = new MenuDTO();
+        menu.setCategories(menuCategories);
+        return menu;
     }
 
     public void deleteMenuEntry(Integer menuEntryId)

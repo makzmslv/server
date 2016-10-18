@@ -50,6 +50,9 @@ public enum ErrorCodes
     // bill
    BILL_ALREADY_EXISTS(601, "Bill already exists for order"),
 
+   //hotel
+   HOTEL_NOT_FOUND(700, "Hotel with given id does not exist"),
+
     TEST(111111, "Test");
 
     // @formatter:on

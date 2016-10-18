@@ -1,41 +1,18 @@
 package backend.business.dto;
 
+import java.util.List;
+
 public class MenuDTO
 {
-    private Integer id;
+    private List<MenuCategoryDTO> categories;
 
-    private MenuItemDTO menuItem;
-
-    private CategoryDTO category;
-
-    public Integer getId()
+    public List<MenuCategoryDTO> getCategories()
     {
-        return id;
+        return categories;
     }
 
-    public void setId(Integer id)
+    public void setCategories(List<MenuCategoryDTO> categories)
     {
-        this.id = id;
+        this.categories = categories;
     }
-
-    public MenuItemDTO getMenuItem()
-    {
-        return menuItem;
-    }
-
-    public void setMenuItem(MenuItemDTO menuItem)
-    {
-        this.menuItem = menuItem;
-    }
-
-    public CategoryDTO getCategory()
-    {
-        return category;
-    }
-
-    public void setCategory(CategoryDTO category)
-    {
-        this.category = category;
-    }
-
 }

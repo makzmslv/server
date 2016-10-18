@@ -12,38 +12,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import backend.business.dto.MenuCreateDTO;
+import backend.business.dto.HotelCreateDTO;
+import backend.business.dto.HotelDTO;
 import backend.business.dto.MenuDTO;
-import backend.business.dto.MenuUpdateDTO;
+import backend.server.service.impl.HotelServiceImpl;
 import backend.server.service.impl.MenuServiceImpl;
 import io.swagger.annotations.Api;
 
-@Api(value = "menu")
+@Api(value = "hotel")
 @Controller
-@RequestMapping(value = "/menu")
-public class MenuController
+@RequestMapping(value = "/hotel")
+public class HotelController
 {
+
     @Autowired
     private MenuServiceImpl menuService;
 
+    @Autowired
+    private HotelServiceImpl hotelService;
+
+    @RequestMapping(value = "/{hotelId}/menu", method = RequestMethod.GET)
+    @ResponseBody
+    public MenuDTO getMenuEntriesForHotel(@PathVariable Integer hotelId)
+    {
+        return menuService.getMenuEntriesForHotel(hotelId);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public List<MenuDTO> createMenuEntry(@Valid @PathVariable Integer hotelId, @RequestBody List<MenuCreateDTO> createDTO)
+    public HotelDTO createHotel(@Valid @RequestBody HotelCreateDTO createDTO)
     {
-        return menuService.createMenuEntries(hotelId, createDTO);
+        return hotelService.createHotel(createDTO);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public MenuDTO updateMenuEntry(@PathVariable Integer id, @Valid @RequestBody MenuUpdateDTO updateDTO)
+    public List<HotelDTO> getAllHotels()
     {
-        return menuService.updateMenuEntry(id, updateDTO);
-    }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public void deleteMenuEntry(@PathVariable Integer id)
-    {
-        menuService.deleteMenuEntry(id);
+        return hotelService.getAllHotels();
     }
 }
