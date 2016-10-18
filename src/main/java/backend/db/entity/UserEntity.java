@@ -1,6 +1,6 @@
 package backend.db.entity;
 
-public class CityEntity
+public class UserEntity
 {
 
 }

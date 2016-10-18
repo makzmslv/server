@@ -6,22 +6,5 @@
     <!-- MenuEntity - MenuDTO -->
     <!--                                  -->
 
-    <mapping>
-        <class-a>backend.db.entity.MenuEntity</class-a>
-        <class-b>backend.business.dto.MenuDTO</class-b>
-
-        <field>
-            <a>id</a>
-            <b>id</b>
-        </field>
-        <field>
-            <a>menuItem</a>
-            <b>menuItem</b>
-        </field>
-        <field>
-            <a>category</a>
-            <b>category</b>
-        </field>
-    </mapping>
 
 </mappings>

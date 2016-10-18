@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import backend.business.dto.HotelCreateDTO;
 import backend.business.dto.HotelDTO;
+import backend.business.dto.MenuCreateDTO;
 import backend.business.dto.MenuDTO;
 import backend.server.service.impl.HotelServiceImpl;
 import backend.server.service.impl.MenuServiceImpl;
@@ -36,6 +37,13 @@ public class HotelController
     public MenuDTO getMenuEntriesForHotel(@PathVariable Integer hotelId)
     {
         return menuService.getMenuEntriesForHotel(hotelId);
+    }
+
+    @RequestMapping(value = "/{hotelId}/menu", method = RequestMethod.POST)
+    @ResponseBody
+    public List<MenuDTO> createMenuEntry(@PathVariable Integer hotelId, @Valid @RequestBody List<MenuCreateDTO> createDTO)
+    {
+        return menuService.createMenuEntries(hotelId, createDTO);
     }
 
     @RequestMapping(method = RequestMethod.POST)

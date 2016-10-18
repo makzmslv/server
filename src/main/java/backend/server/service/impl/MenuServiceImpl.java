@@ -71,7 +71,6 @@ public class MenuServiceImpl
             checkIfMenuEntryAlreadyExists(categoryEntity, menuItemEntity);
             MenuEntriesEntity menuEntriesEntity = createMenuEntryEntity(hotelMenu, categoryEntity, menuItemEntity);
             menuEntriesEntity = menuItemListDAO.save(menuEntriesEntity);
-            menuEntries.add(mapper.map(menuEntriesEntity, MenuDTO.class));
         }
         return menuEntries;
     }

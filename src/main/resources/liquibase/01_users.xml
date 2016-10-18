@@ -5,13 +5,13 @@
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
     <changeSet author="mk3" id="1">
         <!--                                 -->
-        <!-- USERS -->
+        <!-- CUSTOMER -->
         <!--                                 -->
-        <createTable tableName="USERS" remarks="USERS">
+        <createTable tableName="CUSTOMER" remarks="CUSTOMER">
             <column name="ID" type="INTEGER" autoIncrement="true">
-                <constraints primaryKey="true" primaryKeyName="USERS_PK" nullable="false"/>
+                <constraints primaryKey="true" primaryKeyName="CUSTOMER_PK" nullable="false"/>
             </column>
-            <column name="USERNAME" type="VARCHAR(50)">
+            <column name="NAME" type="VARCHAR(50)">
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="PASSWORD" type="VARCHAR(500)">
