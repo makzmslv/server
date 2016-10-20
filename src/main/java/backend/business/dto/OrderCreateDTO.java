@@ -2,15 +2,15 @@ package backend.business.dto;
 
 public class OrderCreateDTO
 {
-    private Integer tableNo;
+    private String username;
 
-    public Integer getTableNo()
+    public String getUsername()
     {
-        return tableNo;
+        return username;
     }
 
-    public void setTableNo(Integer tableNo)
+    public void setUsername(String username)
     {
-        this.tableNo = tableNo;
+        this.username = username;
     }
 }

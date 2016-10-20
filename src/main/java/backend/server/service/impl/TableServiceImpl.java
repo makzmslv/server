@@ -68,8 +68,7 @@ public class TableServiceImpl
     public List<OrderDTO> getAllOrdersForTable(Integer tableNo)
     {
         TableEntity tableEntity = validator.getTableEntityFromTableNo(tableNo);
-        List<OrderEntity> orderEntities = orderDAO.findByTableEntityOrderByIdDesc(tableEntity);
-        return UtilHelper.mapListOfEnitiesToDTOs(mapper, orderEntities, OrderDTO.class);
+        return null;
     }
 
     private void validateCreateTableInput(TableCreateDTO createDTO)

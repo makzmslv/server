@@ -50,6 +50,9 @@ public enum ErrorCodes
     // bill
    BILL_ALREADY_EXISTS(601, "Bill already exists for order"),
 
+   //user
+   CUSTOMER_NOT_FOUND(801, "Customer with given name does not exist"),
+
    //hotel
    HOTEL_NOT_FOUND(700, "Hotel with given id does not exist"),
 

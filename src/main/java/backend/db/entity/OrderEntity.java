@@ -30,8 +30,8 @@ public class OrderEntity implements Serializable
     private Integer status;
 
     @ManyToOne
-    @JoinColumn(name = "REF_TABLE")
-    private TableEntity tableEntity;
+    @JoinColumn(name = "REF_CUSTOMER_ACCOUNT_DETAILS")
+    private CustomerDetailsEntity customerDetails;
 
     @OneToOne(mappedBy = "orderEntity", cascade = CascadeType.ALL)
     private BillEntity bill;
@@ -59,14 +59,29 @@ public class OrderEntity implements Serializable
         this.status = status;
     }
 
-    public TableEntity getTable()
+    public CustomerDetailsEntity getCustomerDetails()
     {
-        return tableEntity;
+        return customerDetails;
     }
 
-    public void setTable(TableEntity table)
+    public void setCustomerDetails(CustomerDetailsEntity customerDetails)
     {
-        this.tableEntity = table;
+        this.customerDetails = customerDetails;
+    }
+
+    public BillEntity getBill()
+    {
+        return bill;
+    }
+
+    public void setBill(BillEntity bill)
+    {
+        this.bill = bill;
+    }
+
+    public static long getSerialversionuid()
+    {
+        return serialVersionUID;
     }
 
     public List<OrderDetailsEntity> getOrderDetails()

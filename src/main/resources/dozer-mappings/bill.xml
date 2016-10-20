@@ -38,10 +38,6 @@
             <a>timestamp</a>
             <b>timestamp</b>
         </field>
-        <field>
-            <a>table.tableNo</a>
-            <b>tableNo</b>
-        </field>
     </mapping>
 
 

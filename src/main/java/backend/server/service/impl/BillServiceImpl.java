@@ -43,7 +43,7 @@ public class BillServiceImpl
         OrderEntity orderEntity = validator.getOrderEntityFromId(createDTO.getOrderId());
         validateInput(orderEntity);
         BillEntity bill = new BillEntity();
-        bill.setTable(orderEntity.getTable());
+        bill.setCustomerDetails(orderEntity.getCustomerDetails());
         bill.setOrder(orderEntity);
         prepareBillEntity(bill);
         bill = billDAO.save(bill);

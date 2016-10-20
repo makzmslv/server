@@ -29,12 +29,6 @@ public class TableEntity implements Serializable
     @Column(name = "ACTIVE")
     private Boolean active;
 
-    @OneToMany(mappedBy = "tableEntity", cascade = CascadeType.ALL)
-    private List<OrderEntity> orders;
-
-    @OneToMany(mappedBy = "tableEntity", cascade = CascadeType.ALL)
-    private List<BillEntity> bills;
-
     public int getId()
     {
         return id;
@@ -64,25 +58,4 @@ public class TableEntity implements Serializable
     {
         this.active = active;
     }
-
-    public List<BillEntity> getBills()
-    {
-        return bills;
-    }
-
-    public void setBills(List<BillEntity> bills)
-    {
-        this.bills = bills;
-    }
-
-    public List<OrderEntity> getOrders()
-    {
-        return orders;
-    }
-
-    public void setOrders(List<OrderEntity> orders)
-    {
-        this.orders = orders;
-    }
-
 }

@@ -25,10 +25,10 @@ import backend.db.dao.BillDAO;
 import backend.db.dao.OrderDAO;
 import backend.db.dao.OrderDetailsDAO;
 import backend.db.entity.BillEntity;
+import backend.db.entity.CustomerAccountDetailsEntity;
 import backend.db.entity.MenuItemEntity;
 import backend.db.entity.OrderDetailsEntity;
 import backend.db.entity.OrderEntity;
-import backend.db.entity.TableEntity;
 
 @Service
 @Transactional
@@ -51,15 +51,11 @@ public class OrderServiceImpl
 
     public OrderDTO createOrder(OrderCreateDTO createDTO)
     {
-        TableEntity tableEntity = validator.getTableEntityFromTableNo(createDTO.getTableNo());
-        if (!tableEntity.getActive())
-        {
-            throw new ServerException(new ErrorMessage(ErrorCodes.TABLE_INACTIVE));
-        }
-        checkIfOrderAlreadyInProgressForTable(tableEntity);
+        CustomerAccountDetailsEntity customerAccDetails = validator.getCustomerAccountDetailsEntity(createDTO.getUsername());
+        checkIfOrderAlreadyInProgressForTable(customerAccDetails);
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setStatus(OrderStatus.CREATED.getCode());
-        orderEntity.setTable(tableEntity);
+        orderEntity.setCustomerDetails(customerAccDetails.getCustomerDetails());
         orderEntity = orderDAO.save(orderEntity);
         return mapper.map(orderEntity, OrderDTO.class);
     }
@@ -133,9 +129,9 @@ public class OrderServiceImpl
         return UtilHelper.mapListOfEnitiesToDTOs(mapper, orderItems, OrderDetailsDTO.class);
     }
 
-    private void checkIfOrderAlreadyInProgressForTable(TableEntity tableEntity)
+    private void checkIfOrderAlreadyInProgressForTable(CustomerAccountDetailsEntity customerAccDetails)
     {
-        OrderEntity orderEntity = orderDAO.findByTableEntityAndStatusNot(tableEntity, OrderStatus.BILL_PAID.getCode());
+        OrderEntity orderEntity = orderDAO.findByCustomerDetailsAndStatusNot(customerAccDetails.getCustomerDetails(), OrderStatus.BILL_PAID.getCode());
         if (orderEntity != null)
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_IN_PROGRESS));

@@ -18,10 +18,6 @@
             <a>status</a>
             <b>status</b>
         </field>
-        <field>
-            <a>table.tableNo</a>
-            <b>tableNo</b>
-        </field>
     </mapping>
 
     <!--                                  -->

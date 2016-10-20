@@ -7,12 +7,14 @@ import backend.business.enums.ErrorCodes;
 import backend.business.error.ErrorMessage;
 import backend.business.error.ServerException;
 import backend.db.dao.CategoryDAO;
-import backend.db.dao.MenuItemListDAO;
+import backend.db.dao.CustomerAccountDetailsDAO;
 import backend.db.dao.MenuItemDAO;
+import backend.db.dao.MenuItemListDAO;
 import backend.db.dao.OrderDAO;
 import backend.db.dao.OrderDetailsDAO;
 import backend.db.dao.TableDAO;
 import backend.db.entity.CategoryEntity;
+import backend.db.entity.CustomerAccountDetailsEntity;
 import backend.db.entity.MenuEntriesEntity;
 import backend.db.entity.MenuItemEntity;
 import backend.db.entity.OrderDetailsEntity;
@@ -36,6 +38,9 @@ public class EntryExistingValidator
 
     @Autowired
     private OrderDAO orderDAO;
+
+    @Autowired
+    private CustomerAccountDetailsDAO customerAccountDetailsDAO;
 
     @Autowired
     private OrderDetailsDAO orderDetailsDAO;
@@ -98,5 +103,15 @@ public class EntryExistingValidator
             throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_DOES_NOT_EXIST));
         }
         return orderDetailsEntity;
+    }
+
+    public CustomerAccountDetailsEntity getCustomerAccountDetailsEntity(String username)
+    {
+        CustomerAccountDetailsEntity customerAccountDetailsEntity = customerAccountDetailsDAO.findByUserName(username);
+        if (customerAccountDetailsEntity == null)
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.CUSTOMER_NOT_FOUND));
+        }
+        return customerAccountDetailsEntity;
     }
 }

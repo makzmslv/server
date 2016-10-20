@@ -28,8 +28,8 @@ public class BillEntity implements Serializable
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "REF_TABLE")
-    private TableEntity tableEntity;
+    @JoinColumn(name = "REF_CUSTOMER_ACCOUNT_DETAILS")
+    private CustomerDetailsEntity customerDetails;
 
     @OneToOne
     @JoinColumn(name = "REF_ORDER")
@@ -61,14 +61,24 @@ public class BillEntity implements Serializable
         this.id = id;
     }
 
-    public TableEntity getTable()
+    public CustomerDetailsEntity getCustomerDetails()
     {
-        return tableEntity;
+        return customerDetails;
     }
 
-    public void setTable(TableEntity table)
+    public void setCustomerDetails(CustomerDetailsEntity customerDetails)
     {
-        this.tableEntity = table;
+        this.customerDetails = customerDetails;
+    }
+
+    public OrderEntity getOrderEntity()
+    {
+        return orderEntity;
+    }
+
+    public void setOrderEntity(OrderEntity orderEntity)
+    {
+        this.orderEntity = orderEntity;
     }
 
     public OrderEntity getOrder()

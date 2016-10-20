@@ -52,10 +52,10 @@
             <column name="ROLE" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="REF_CUSTOMER_ACCOUNT_DETAILS" type="INTEGER">
+            <column name="REF_CUSTOMER_DETAILS" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint constraintName="FK_CUSTOMER_ACCOUNT_DETAILS_CUSTOMER_DETAILS" baseTableName="CUSTOMER_ACCOUNT_DETAILS" baseColumnNames="REF_CUSTOMER_ACCOUNT_DETAILS" referencedTableName="CUSTOMER_DETAILS" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="FK_CUSTOMER_ACCOUNT_DETAILS_CUSTOMER_DETAILS" baseTableName="CUSTOMER_ACCOUNT_DETAILS" baseColumnNames="REF_CUSTOMER_DETAILS" referencedTableName="CUSTOMER_DETAILS" referencedColumnNames="ID"/>
     </changeSet>
 </databaseChangeLog>
