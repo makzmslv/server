@@ -10,7 +10,7 @@
             <column name="ID" type="INTEGER" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="BILL_PK" nullable="false"/>
             </column>
-            <column name="REF_TABLE" type="INTEGER">
+            <column name="REF_CUSTOMER_ACCOUNT_DETAILS" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
             <column name="REF_ORDER" type="INTEGER">
@@ -32,7 +32,7 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint constraintName="FK_BILL_REF_TABLE" baseTableName="BILL" baseColumnNames="REF_TABLE" referencedTableName="TABLES" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="FK_BILL_REF_CUSTOMER_ACCOUNT_DETAILS" baseTableName="BILL" baseColumnNames="REF_CUSTOMER_ACCOUNT_DETAILS" referencedTableName="CUSTOMER_ACCOUNT_DETAILS" referencedColumnNames="ID"/>
         <addForeignKeyConstraint constraintName="FK_BILL_REF_ORDER" baseTableName="BILL" baseColumnNames="REF_ORDER" referencedTableName="ORDERS" referencedColumnNames="ID"/>
     </changeSet>
 </databaseChangeLog>

@@ -17,7 +17,7 @@ import io.swagger.annotations.Api;
 
 @Api(value = "menu")
 @Controller
-@RequestMapping(value = "/menu")
+@RequestMapping(value = "/menus")
 public class MenuController
 {
     @Autowired

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet author="mk3" id="1">
+        <!--                                 -->
+        <!-- CUSTOMER_DETAILS -->
+        <!--                                 -->
+        <createTable tableName="CUSTOMER_DETAILS" remarks="CUSTOMER_DETAILS">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="CUSTOMER_DETAILS_PK" nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="ADDRESS" type="VARCHAR(500)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="CONTACT_NO" type="DECIMAL(10, 0)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="REGISTRATION_ID" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LONGITUDE" type="DECIMAL(11, 8)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="LATITUDE" type="DECIMAL(10, 8)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mk3" id="2">
+        <!--                                 -->
+        <!-- CUSTOMER_ACCOUNT_DETAILS -->
+        <!--                                 -->
+        <createTable tableName="CUSTOMER_ACCOUNT_DETAILS" remarks="CUSTOMER_ACCOUNT_DETAILS">
+            <column name="ID" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="CUSTOMER_ACCOUNT_DETAILS_PK" nullable="false"/>
+            </column>
+            <column name="USERNAME" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="PASSWORD" type="VARCHAR(500)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="VERIFIED" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ROLE" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REF_CUSTOMER_ACCOUNT_DETAILS" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint constraintName="FK_CUSTOMER_ACCOUNT_DETAILS_CUSTOMER_DETAILS" baseTableName="CUSTOMER_ACCOUNT_DETAILS" baseColumnNames="REF_CUSTOMER_ACCOUNT_DETAILS" referencedTableName="CUSTOMER_DETAILS" referencedColumnNames="ID"/>
+    </changeSet>
+</databaseChangeLog>

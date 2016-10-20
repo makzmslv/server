@@ -22,7 +22,7 @@ import io.swagger.annotations.Api;
 
 @Api(value = "hotel")
 @Controller
-@RequestMapping(value = "/hotel")
+@RequestMapping(value = "/hotels")
 public class HotelController
 {
 
@@ -32,14 +32,14 @@ public class HotelController
     @Autowired
     private HotelServiceImpl hotelService;
 
-    @RequestMapping(value = "/{hotelId}/menu", method = RequestMethod.GET)
+    @RequestMapping(value = "/{hotelId}/menus", method = RequestMethod.GET)
     @ResponseBody
     public MenuDTO getMenuEntriesForHotel(@PathVariable Integer hotelId)
     {
         return menuService.getMenuEntriesForHotel(hotelId);
     }
 
-    @RequestMapping(value = "/{hotelId}/menu", method = RequestMethod.POST)
+    @RequestMapping(value = "/{hotelId}/menus", method = RequestMethod.POST)
     @ResponseBody
     public List<MenuDTO> createMenuEntry(@PathVariable Integer hotelId, @Valid @RequestBody List<MenuCreateDTO> createDTO)
     {
