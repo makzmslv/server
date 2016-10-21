@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import backend.business.dto.HotelCreateDTO;
@@ -55,8 +56,8 @@ public class HotelController
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<HotelDTO> getAllHotels()
+    public List<HotelDTO> getAllHotels(@RequestParam(required = false) String area)
     {
-        return hotelService.getAllHotels();
+        return hotelService.getAllHotels(area);
     }
 }

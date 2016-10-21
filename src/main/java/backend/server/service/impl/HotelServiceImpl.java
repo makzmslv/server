@@ -2,6 +2,7 @@ package backend.server.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -38,10 +39,18 @@ public class HotelServiceImpl
         return mapper.map(hotel, HotelDTO.class);
     }
 
-    public List<HotelDTO> getAllHotels()
+    public List<HotelDTO> getAllHotels(String area)
     {
         Sort sort = new Sort(new Order(Direction.ASC,"name"));
-        List<HotelEntity> hotels = hotelDAO.findAll(sort);
+        List<HotelEntity> hotels;
+        if(area != null && StringUtils.isEmpty(area) && StringUtils.isBlank(area))
+        {
+            hotels = hotelDAO.findByAreaIgnoreCase(area, sort);
+        }
+        else
+        {
+            hotels = hotelDAO.findAll(sort);
+        }
         return UtilHelper.mapListOfEnitiesToDTOs(mapper, hotels, HotelDTO.class);
     }
 
