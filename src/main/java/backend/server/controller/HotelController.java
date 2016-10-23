@@ -56,8 +56,8 @@ public class HotelController
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<HotelDTO> getAllHotels(@RequestParam(required = false) String area)
+    public List<HotelDTO> getAllHotels(@RequestParam(required = false) String area, @RequestParam(required = false) String name)
     {
-        return hotelService.getAllHotels(area);
+        return hotelService.getAllHotels(area, name);
     }
 }

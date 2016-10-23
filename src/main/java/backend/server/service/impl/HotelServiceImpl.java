@@ -39,13 +39,17 @@ public class HotelServiceImpl
         return mapper.map(hotel, HotelDTO.class);
     }
 
-    public List<HotelDTO> getAllHotels(String area)
+    public List<HotelDTO> getAllHotels(String area, String name)
     {
         Sort sort = new Sort(new Order(Direction.ASC,"name"));
         List<HotelEntity> hotels;
-        if(area != null && StringUtils.isEmpty(area) && StringUtils.isBlank(area))
+        if(area != null && !StringUtils.isEmpty(area) && !StringUtils.isBlank(area))
         {
             hotels = hotelDAO.findByAreaIgnoreCase(area, sort);
+        }
+        else if(name != null && !StringUtils.isEmpty(name) && !StringUtils.isBlank(name))
+        {
+            hotels = hotelDAO.findByNameStartsWithIgnoreCase(name, sort);
         }
         else
         {

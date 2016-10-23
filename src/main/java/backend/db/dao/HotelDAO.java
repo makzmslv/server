@@ -10,4 +10,6 @@ import backend.db.entity.HotelEntity;
 public interface HotelDAO extends JpaRepository<HotelEntity, Integer>
 {
     public List<HotelEntity> findByAreaIgnoreCase(String area, Sort sort);
+
+    public List<HotelEntity> findByNameStartsWithIgnoreCase(String area, Sort sort);
 }
