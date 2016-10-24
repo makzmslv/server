@@ -6,5 +6,7 @@ import backend.db.entity.CustomerAccountDetailsEntity;
 
 public interface CustomerAccountDetailsDAO extends JpaRepository<CustomerAccountDetailsEntity, Integer>
 {
+    public CustomerAccountDetailsEntity findByUserNameAndEnabled(String username, boolean isVerified);
+
     public CustomerAccountDetailsEntity findByUserName(String username);
 }
