@@ -15,10 +15,10 @@
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="ADDRESS" type="VARCHAR(500)">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" />
             </column>
             <column name="CONTACT_NO" type="DECIMAL(10, 0)">
-                <constraints nullable="true"/>
+                <constraints nullable="false"/>
             </column>
             <column name="REGISTRATION_ID" type="INTEGER">
                 <constraints nullable="false"/>
@@ -57,5 +57,22 @@
             </column>
         </createTable>
         <addForeignKeyConstraint constraintName="FK_CUSTOMER_ACCOUNT_DETAILS_CUSTOMER_DETAILS" baseTableName="CUSTOMER_ACCOUNT_DETAILS" baseColumnNames="REF_CUSTOMER_DETAILS" referencedTableName="CUSTOMER_DETAILS" referencedColumnNames="ID"/>
+    </changeSet>
+
+    <changeSet author="mk3" id="3">
+    	<insert tableName="CUSTOMER_DETAILS">
+    		<column name="ID" valueNumeric="1" />
+            <column name="NAME" value="defaultUser" />
+            <column name="ADDRESS" value="address" />
+            <column name="CONTACT_NO" value="99999999" />
+            <column name="REGISTRATION_ID" valueNumeric="0" />
+        </insert>
+        <insert tableName="CUSTOMER_ACCOUNT_DETAILS">
+            <column name="USERNAME" value="defaultUser" />
+            <column name="PASSWORD" value="password" />
+            <column name="VERIFIED" valueNumeric="1" />
+            <column name="ROLE" valueNumeric="1" />
+            <column name="REF_CUSTOMER_DETAILS" valueNumeric="1" />
+        </insert>
     </changeSet>
 </databaseChangeLog>
