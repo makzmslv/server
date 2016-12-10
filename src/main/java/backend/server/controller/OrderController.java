@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,50 +24,56 @@ import io.swagger.annotations.Api;
 
 @Api(value = "orders", description = "orders")
 @Controller
-@RequestMapping(value = "/tables/{tableNo}/orders")
+@RequestMapping(value = "/orders")
 public class OrderController
 {
     @Autowired
     private OrderServiceImpl orderService;
 
+    @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public OrderDTO createOrder(@PathVariable Integer tableNo, @RequestBody OrderCreateDTO createDTO)
+    public OrderDTO createOrder(@RequestBody OrderCreateDTO createDTO)
     {
         return orderService.createOrder(createDTO);
     }
 
+    @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(value = "/{orderId}", method = RequestMethod.GET)
     @ResponseBody
-    public OrderDTO getOrder(@PathVariable Integer tableNo, @PathVariable Integer orderId)
+    public OrderDTO getOrder(@PathVariable Integer orderId)
     {
         return orderService.getOrder(orderId);
     }
 
+    @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(value = "/{orderId}/orderDetails", method = RequestMethod.GET)
     @ResponseBody
-    public List<OrderDetailsDTO> getOrderItems(@PathVariable Integer tableNo, Integer orderId)
+    public List<OrderDetailsDTO> getOrderItems(Integer orderId)
     {
         return orderService.getOrderItems(orderId);
     }
 
+    @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(value = "/{orderId}/orderDetails", method = RequestMethod.POST)
     @ResponseBody
-    public List<OrderDetailsDTO> addMenuItemsToOrder(@PathVariable Integer tableNo, @PathVariable Integer orderId, @Valid @RequestBody List<OrderDetailsCreateDTO> orderDetailscreateDTO)
+    public List<OrderDetailsDTO> addMenuItemsToOrder(@PathVariable Integer orderId, @Valid @RequestBody List<OrderDetailsCreateDTO> orderDetailscreateDTO)
     {
         return orderService.addMenuItemsToOrder(orderId, orderDetailscreateDTO);
     }
 
+    @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(value = "/{orderId}/orderDetails", method = RequestMethod.PUT)
     @ResponseBody
-    public List<OrderDetailsDTO> updateOrderItems(@PathVariable Integer tableNo, @PathVariable Integer orderId, @Valid @RequestBody List<OrderDetailsUpdateDTO> orderDetailsUpdateDTO)
+    public List<OrderDetailsDTO> updateOrderItems(@PathVariable Integer orderId, @Valid @RequestBody List<OrderDetailsUpdateDTO> orderDetailsUpdateDTO)
     {
         return orderService.updateOrderItems(orderId, orderDetailsUpdateDTO);
     }
 
+    @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(value = "/{orderId}", method = RequestMethod.PUT)
     @ResponseBody
-    public OrderDTO updateOrderStatus(@PathVariable Integer tableNo, @PathVariable Integer orderId, @Valid @RequestBody OrderUpdateDTO updateDTO)
+    public OrderDTO updateOrderStatus(@PathVariable Integer orderId, @Valid @RequestBody OrderUpdateDTO updateDTO)
     {
         return orderService.updateOrderStatus(orderId, updateDTO);
     }

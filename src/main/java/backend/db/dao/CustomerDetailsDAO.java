@@ -6,5 +6,5 @@ import backend.db.entity.CustomerDetailsEntity;
 
 public interface CustomerDetailsDAO extends JpaRepository<CustomerDetailsEntity, Integer>
 {
-
+ public CustomerDetailsEntity findByRegistrationId(Integer registrationId);
 }

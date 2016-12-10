@@ -12,16 +12,16 @@
                 <constraints primaryKey="true" primaryKeyName="CUSTOMER_DETAILS_PK" nullable="false"/>
             </column>
             <column name="NAME" type="VARCHAR(50)">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="true" unique="true"/>
             </column>
             <column name="ADDRESS" type="VARCHAR(500)">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="CONTACT_NO" type="DECIMAL(10, 0)">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="REGISTRATION_ID" type="INTEGER">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="LONGITUDE" type="DECIMAL(11, 8)">
                 <constraints nullable="true"/>

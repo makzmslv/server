@@ -44,14 +44,14 @@ public class LoginAuthenticationImpl implements UserDetailsService
         List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
         if (role.intValue() == UserAuthorities.ADMIN.getRole())
         {
-            authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-            authList.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            authList.add(new SimpleGrantedAuthority("ACCESS_ALL"));
+            authList.add(new SimpleGrantedAuthority("READ_ONLY"));
         }
         else
         {
             if (role.intValue() == UserAuthorities.USER.getRole())
             {
-                authList.add(new SimpleGrantedAuthority("ROLE_USER"));
+                authList.add(new SimpleGrantedAuthority("READ_ONLY"));
             }
         }
         return authList;

@@ -17,7 +17,7 @@ import io.swagger.annotations.Api;
 
 @Api(value = "bill")
 @Controller
-@RequestMapping(value = "/tables/{tableNo}/orders/{orderId}/bill")
+@RequestMapping(value = "/orders/{orderId}/bill")
 public class BillController
 {
     @Autowired
@@ -25,21 +25,21 @@ public class BillController
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public BillDTO generateBill(@PathVariable Integer tableNo, @PathVariable Integer orderId, @Valid @RequestBody BillCreateDTO createDTO)
+    public BillDTO generateBill(@PathVariable Integer orderId, @Valid @RequestBody BillCreateDTO createDTO)
     {
         return billService.createBill(createDTO);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public BillDTO getOrder(@PathVariable Integer tableNo, @PathVariable Integer orderId)
+    public BillDTO getOrder(@PathVariable Integer orderId)
     {
         return billService.getBillForOrder(orderId);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public BillDTO regenerateBill(@PathVariable Integer tableNo, @PathVariable Integer orderId)
+    public BillDTO regenerateBill(@PathVariable Integer orderId)
     {
         return billService.recalculateBill(orderId);
     }

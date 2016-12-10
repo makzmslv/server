@@ -34,6 +34,7 @@ public class HotelController
     @Autowired
     private HotelServiceImpl hotelService;
 
+    @PreAuthorize("hasRole('READ_ONLY')")
     @RequestMapping(value = "/{hotelId}/menus", method = RequestMethod.GET)
     @ResponseBody
     public MenuDTO getMenuEntriesForHotel(@PathVariable Integer hotelId)
@@ -41,6 +42,7 @@ public class HotelController
         return menuService.getMenuEntriesForHotel(hotelId);
     }
 
+    @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(value = "/{hotelId}/menus", method = RequestMethod.POST)
     @ResponseBody
     public List<MenuDTO> createMenuEntry(@PathVariable Integer hotelId, @Valid @RequestBody List<MenuCreateDTO> createDTO)
@@ -48,14 +50,15 @@ public class HotelController
         return menuService.createMenuEntries(hotelId, createDTO);
     }
 
+    @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     public HotelDTO createHotel(@Valid @RequestBody HotelCreateDTO createDTO)
     {
         return hotelService.createHotel(createDTO);
     }
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    
+    @PreAuthorize("hasRole('READ_ONLY')")
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<HotelDTO> getAllHotels(@RequestParam(required = false) String area, @RequestParam(required = false) String name)
