@@ -69,10 +69,11 @@
         </insert>
         <insert tableName="CUSTOMER_ACCOUNT_DETAILS">
             <column name="USERNAME" value="defaultUser" />
-            <column name="PASSWORD" value="password" />
+            <column name="PASSWORD" value="5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8" />
             <column name="VERIFIED" valueNumeric="1" />
             <column name="ROLE" valueNumeric="1" />
             <column name="REF_CUSTOMER_DETAILS" valueNumeric="1" />
         </insert>
     </changeSet>
 </databaseChangeLog>
+<!-- 5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8  6806ed4fe828acc8784d8707998daa146dabe0a3-->

@@ -2,11 +2,14 @@ package backend.db.entity;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -36,8 +39,19 @@ public class CustomerDetailsEntity
 
     @Column(name = "LONGITUDE")
     private BigDecimal longitude;
+    
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "customerDetails", cascade = CascadeType.ALL)
+    CustomerAccountDetailsEntity loginDetails;
 
-    public int getId()
+    public CustomerAccountDetailsEntity getLoginDetails() {
+		return loginDetails;
+	}
+
+	public void setLoginDetails(CustomerAccountDetailsEntity loginDetails) {
+		this.loginDetails = loginDetails;
+	}
+
+	public int getId()
     {
         return id;
     }

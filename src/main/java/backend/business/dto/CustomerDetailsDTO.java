@@ -6,6 +6,7 @@ import javax.persistence.Column;
 
 public class CustomerDetailsDTO 
 {
+	Integer id;
 	private String name;
 	private String address;
     private Integer registrationId;
@@ -16,6 +17,12 @@ public class CustomerDetailsDTO
     private String password;
     
     
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getUsername() {
 		return username;
 	}

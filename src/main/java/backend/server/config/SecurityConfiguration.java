@@ -2,6 +2,8 @@ package backend.server.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configurers.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,13 +21,19 @@ public class SecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception
     {
-        auth.userDetailsService(userDetailsService());
+        auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
     }
 
     @Bean
     public UserDetailsService userDetailsService()
     {
         return new LoginAuthenticationImpl();
+    }
+    
+    @Bean(name = "passwordEncoder")
+    public PasswordEncoder passwordEncoder()
+    {
+    	return new ShaPasswordEncoder();
     }
 }
 

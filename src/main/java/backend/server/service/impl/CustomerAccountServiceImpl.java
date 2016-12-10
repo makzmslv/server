@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import backend.business.dto.CustomerDetailsDTO;
@@ -36,6 +37,15 @@ public class CustomerAccountServiceImpl
 		return customerDetailsDTO;
 	}
 	
+	public CustomerDetailsDTO getCustomer(Integer user)
+	{
+		CustomerDetailsEntity customerAccDetails = customerDetailsDAO.findOne(user);
+		CustomerDetailsDTO customerDetailsDTO = mapper.map(customerAccDetails, CustomerDetailsDTO.class);
+		customerDetailsDTO.setUsername(customerAccDetails.getLoginDetails().getUserName());
+		customerDetailsDTO.setPassword(customerAccDetails.getLoginDetails().getPassword());
+		return  customerDetailsDTO;
+	}
+	
 	private Integer generateResgistrationId(CustomerDetailsEntity customerAccDetails) {
 		boolean validIdGenerated = false;
 		Integer registrationId = 0;
@@ -59,7 +69,8 @@ public class CustomerAccountServiceImpl
 		CustomerAccountDetailsEntity loginDetails = new CustomerAccountDetailsEntity();
 		loginDetails.setCustomerDetails(customerAccDetails);
 		loginDetails.setUserName(inputDTO.getUsername());
-		loginDetails.setPassword(inputDTO.getPassword());
+		ShaPasswordEncoder passwordEncoder = new ShaPasswordEncoder();
+		loginDetails.setPassword(passwordEncoder.encodePassword(inputDTO.getPassword(), null));
 		loginDetails.setEnabled(true);
 		loginDetails.setRole(1);
 		return customerAccountDetailsDAO.save(loginDetails);

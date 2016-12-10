@@ -83,5 +83,4 @@ public class WebConfig extends WebMvcConfigurerAdapter
         registry.addRedirectViewController("/swagger", SWAGGER_PATH);
         registry.addRedirectViewController("/swagger/", SWAGGER_PATH);
     }
-
 }
