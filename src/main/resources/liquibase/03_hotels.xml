@@ -20,7 +20,7 @@
             <column name="CONTACT_NO" type="DECIMAL(10, 0)">
                 <constraints nullable="true"/>
             </column>
-            <column name="COST" type="DECIMAL(5, 2)">
+            <column name="COST" type="DECIMAL(7, 2)">
                 <constraints nullable="true"/>
             </column>
             <column name="AREA" type="VARCHAR(50)">
@@ -29,10 +29,10 @@
             <column name="IMAGE" type="LONGBLOB">
                 <constraints nullable="true"/>
             </column>
-            <column name="LONGITUDE" type="DECIMAL(11, 8)">
+            <column name="LONGITUDE" type="DECIMAL(20, 8)">
                 <constraints nullable="true"/>
             </column>
-            <column name="LATITUDE" type="DECIMAL(10, 8)">
+            <column name="LATITUDE" type="DECIMAL(20, 8)">
                 <constraints nullable="true"/>
             </column>
             <column name="REF_CITY" type="INTEGER">
