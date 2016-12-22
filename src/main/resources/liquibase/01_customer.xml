@@ -23,10 +23,10 @@
             <column name="REGISTRATION_ID" type="INTEGER">
                 <constraints nullable="true"/>
             </column>
-            <column name="LONGITUDE" type="DECIMAL(11, 8)">
+            <column name="LONGITUDE" type="DECIMAL(20, 8)">
                 <constraints nullable="true"/>
             </column>
-            <column name="LATITUDE" type="DECIMAL(10, 8)">
+            <column name="LATITUDE" type="DECIMAL(20, 8)">
                 <constraints nullable="true"/>
             </column>
         </createTable>
