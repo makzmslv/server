@@ -8,10 +8,10 @@
     <include file="classpath:/liquibase/01_customer.xml"/>
     <include file="classpath:/liquibase/02_city.xml"/>
     <include file="classpath:/liquibase/00_table.xml"/>
-    <include file="classpath:/liquibase/02_category.xml"/>
-    <include file="classpath:/liquibase/03_menu_item.xml"/>
     <include file="classpath:/liquibase/03_hotels.xml"/>
     <include file="classpath:/liquibase/04_hotel_menu.xml"/>
+    <include file="classpath:/liquibase/04_category.xml"/>
+    <include file="classpath:/liquibase/03_menu_item.xml"/>
     <include file="classpath:/liquibase/04_menu_item_list.xml"/>
     <include file="classpath:/liquibase/05_order.xml"/>
     <include file="classpath:/liquibase/06_bill.xml"/>

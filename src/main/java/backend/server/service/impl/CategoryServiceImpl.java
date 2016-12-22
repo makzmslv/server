@@ -21,8 +21,10 @@ import backend.business.error.ServerException;
 import backend.business.library.UtilHelper;
 import backend.db.dao.CategoryDAO;
 import backend.db.dao.MenuItemListDAO;
+import backend.db.dao.SubCategoryDAO;
 import backend.db.entity.CategoryEntity;
 import backend.db.entity.MenuEntriesEntity;
+import backend.db.entity.SubCategoryEntity;
 
 @Service
 @Transactional
@@ -30,6 +32,9 @@ public class CategoryServiceImpl
 {
     @Autowired
     private CategoryDAO categoryDAO;
+
+    @Autowired
+    private SubCategoryDAO subCategoryDAO;
 
     @Autowired
     private MenuItemListDAO menuItemListDAO;
@@ -43,9 +48,17 @@ public class CategoryServiceImpl
     public CategoryDTO createCategory(CategoryCreateDTO createDTO)
     {
         validateInputForCreateDTO(createDTO);
-        CategoryEntity category = mapper.map(createDTO, CategoryEntity.class);
+        CategoryEntity category = new CategoryEntity();
+        category.setName(createDTO.getName());
+        category.setHotel(validator.getHotelFromId(createDTO.getHotelId()));
         category = categoryDAO.save(category);
-        return mapper.map(category, CategoryDTO.class);
+        SubCategoryEntity subCategory = mapper.map(createDTO, SubCategoryEntity.class);
+        subCategory.setCategory(category);
+        subCategoryDAO.save(subCategory);
+        CategoryDTO categoryDTO = mapper.map(subCategory, CategoryDTO.class);
+        categoryDTO.setId(category.getId());
+        categoryDTO.setSubCategoryId(subCategory.getId());
+        return categoryDTO;
     }
 
     public List<CategoryDTO> findAll()
@@ -56,7 +69,7 @@ public class CategoryServiceImpl
 
     public List<CategoryDTO> findbyActiveStatus(Boolean active)
     {
-        List<CategoryEntity> categories = categoryDAO.findByActive(active);
+        List<CategoryEntity> categories = categoryDAO.findAll();
         return UtilHelper.mapListOfEnitiesToDTOs(mapper, categories, CategoryDTO.class);
     }
 
@@ -71,15 +84,15 @@ public class CategoryServiceImpl
 
     public CategoryDTO updateCategoryActiveStatus(Integer categoryId, CategoryUpdateActiveStatusDTO updateDTO)
     {
-        CategoryEntity categoryEntity = validator.getCategoryEntityFromId(categoryId);
-        List<MenuEntriesEntity> menuEntries = menuItemListDAO.findByCategory(categoryEntity);
+        SubCategoryEntity subCategoryEntity = validator.getSubCategoryEntityFromId(categoryId);
+        List<MenuEntriesEntity> menuEntries = menuItemListDAO.findBySubCategory(subCategoryEntity);
         if (!menuEntries.isEmpty())
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_IN_USE));
         }
-        categoryEntity.setActive(updateDTO.getActive());
-        categoryDAO.save(categoryEntity);
-        return mapper.map(categoryEntity, CategoryDTO.class);
+        subCategoryEntity.setActive(updateDTO.getActive());
+        subCategoryDAO.save(subCategoryEntity);
+        return mapper.map(subCategoryEntity, CategoryDTO.class);
     }
 
     public List<CategoryDTO> updateDisplayOrder(List<CategoryUpdateDisplayOrderDTO> updateDTOs)
@@ -87,14 +100,14 @@ public class CategoryServiceImpl
         List<CategoryDTO> updatedCategories = new ArrayList<CategoryDTO>();
         for (CategoryUpdateDisplayOrderDTO updateDTO : updateDTOs)
         {
-            CategoryEntity category1 = validator.getCategoryEntityFromId(updateDTO.getCategoryId1());
-            CategoryEntity category2 = validator.getCategoryEntityFromId(updateDTO.getCategoryId2());
+            SubCategoryEntity category1 = validator.getSubCategoryEntityFromId(updateDTO.getCategoryId1());
+            SubCategoryEntity category2 = validator.getSubCategoryEntityFromId(updateDTO.getCategoryId2());
             Integer displayOrderCategory1 = category1.getDisplayRank();
             Integer displayOrderCategory2 = category2.getDisplayRank();
             category1.setDisplayRank(displayOrderCategory2);
             category2.setDisplayRank(displayOrderCategory1);
-            categoryDAO.save(category1);
-            categoryDAO.save(category2);
+            subCategoryDAO.save(category1);
+            subCategoryDAO.save(category2);
             updatedCategories.add(mapper.map(category1, CategoryDTO.class));
             updatedCategories.add(mapper.map(category2, CategoryDTO.class));
         }
@@ -103,17 +116,17 @@ public class CategoryServiceImpl
 
     public void deleteCategory(Integer categoryId)
     {
-        CategoryEntity category = validator.getCategoryEntityFromId(categoryId);
+        SubCategoryEntity category = validator.getSubCategoryEntityFromId(categoryId);
         if (category.getActive())
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_IN_USE));
         }
-        List<MenuEntriesEntity> menu = menuItemListDAO.findByCategory(category);
+        List<MenuEntriesEntity> menu = menuItemListDAO.findBySubCategory(category);
         if (!menu.isEmpty())
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_IN_USE));
         }
-        categoryDAO.delete(category);
+        subCategoryDAO.delete(category);
     }
 
     private void validateInputForCreateDTO(CategoryCreateDTO createDTO)
@@ -121,7 +134,7 @@ public class CategoryServiceImpl
         validateType(createDTO.getType());
         validateSubType(createDTO.getType(), createDTO.getSubType());
         checkIfDuplicateEntryExists(createDTO);
-        checkIfDisplayRankAlreadyUsed(createDTO.getDisplayRank());
+        checkIfDisplayRankAlreadyUsed(createDTO);
     }
 
     private void validateUpdateDTO(Integer categoryId, CategoryUpdateDTO updateDTO)
@@ -169,17 +182,19 @@ public class CategoryServiceImpl
 
     private void checkIfDuplicateEntryExists(CategoryCreateDTO createDTO)
     {
-        CategoryEntity category = categoryDAO.findByNameAndTypeAndSubType(createDTO.getName(), createDTO.getType(), createDTO.getSubType());
-        if (category != null)
+        CategoryEntity category = categoryDAO.findByName(createDTO.getName());
+        SubCategoryEntity subCategory = subCategoryDAO.findByCategoryAndTypeAndSubType(category, createDTO.getType(), createDTO.getSubType());
+        if (subCategory != null)
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_ALREADY_EXISTS));
         }
     }
 
-    private void checkIfDisplayRankAlreadyUsed(Integer displayOrder)
+    private void checkIfDisplayRankAlreadyUsed(CategoryCreateDTO createDTO)
     {
-        CategoryEntity category = categoryDAO.findByDisplayRank(displayOrder);
-        if (category != null)
+        CategoryEntity category = categoryDAO.findByName(createDTO.getName());
+        SubCategoryEntity subCategory = subCategoryDAO.findByCategoryAndDisplayRank(category, createDTO.getDisplayRank());
+        if (subCategory != null)
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_CATEGORY_DISPLAY_RANK));
         }

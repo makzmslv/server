@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,20 +25,19 @@ public class CategoryEntity implements Serializable
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "TYPE")
-    private Integer type;
+    @OneToOne
+    @JoinColumn(name = "REF_HOTEL")
+    private HotelEntity hotel;
 
-    @Column(name = "SUB_TYPE")
-    private Integer subType;
+    public HotelEntity getHotel()
+    {
+        return hotel;
+    }
 
-    @Column(name = "DESCRIPTION")
-    private String description;
-
-    @Column(name = "DISPLAY_RANK")
-    private Integer displayRank;
-
-    @Column(name = "ACTIVE")
-    private Boolean active;
+    public void setHotel(HotelEntity hotel)
+    {
+        this.hotel = hotel;
+    }
 
     public int getId()
     {
@@ -58,65 +59,13 @@ public class CategoryEntity implements Serializable
         this.name = name;
     }
 
-    public Integer getType()
-    {
-        return type;
-    }
-
-    public void setType(Integer type)
-    {
-        this.type = type;
-    }
-
-    public Integer getSubType()
-    {
-        return subType;
-    }
-
-    public void setSubType(Integer subType)
-    {
-        this.subType = subType;
-    }
-
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-
-    public Integer getDisplayRank()
-    {
-        return displayRank;
-    }
-
-    public void setDisplayRank(Integer displayOrder)
-    {
-        this.displayRank = displayOrder;
-    }
-
-    public Boolean getActive()
-    {
-        return active;
-    }
-
-    public void setActive(Boolean active)
-    {
-        this.active = active;
-    }
 
     @Override
     public int hashCode()
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((active == null) ? 0 : active.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((subType == null) ? 0 : subType.hashCode());
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
         return result;
     }
 
@@ -130,34 +79,6 @@ public class CategoryEntity implements Serializable
         if (getClass() != obj.getClass())
             return false;
         CategoryEntity other = (CategoryEntity) obj;
-        if (active == null)
-        {
-            if (other.active != null)
-                return false;
-        }
-        else if (!active.equals(other.active))
-            return false;
-        if (name == null)
-        {
-            if (other.name != null)
-                return false;
-        }
-        else if (!name.equals(other.name))
-            return false;
-        if (subType == null)
-        {
-            if (other.subType != null)
-                return false;
-        }
-        else if (!subType.equals(other.subType))
-            return false;
-        if (type == null)
-        {
-            if (other.type != null)
-                return false;
-        }
-        else if (!type.equals(other.type))
-            return false;
         return true;
     }
 

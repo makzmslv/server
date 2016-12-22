@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import backend.db.entity.CategoryEntity;
+import backend.db.entity.HotelEntity;
 
 public interface CategoryDAO extends JpaRepository<CategoryEntity, Integer>
 {
-    public CategoryEntity findByNameAndTypeAndSubType(String name, Integer type, Integer subType);
+    public CategoryEntity findByName(String name);
 
-    public CategoryEntity findByDisplayRank(Integer displayOrder);
+    public List<CategoryEntity> findByHotel(HotelEntity hotel);
 
-    public List<CategoryEntity> findByActive(Boolean active);
 }

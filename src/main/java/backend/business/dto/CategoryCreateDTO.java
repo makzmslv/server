@@ -14,6 +14,9 @@ public class CategoryCreateDTO
     private Integer type;
 
     @NotNull
+    private Integer hotelId;
+
+    @NotNull
     private Integer subType;
 
     private String description;
@@ -53,6 +56,16 @@ public class CategoryCreateDTO
     public void setSubType(Integer subType)
     {
         this.subType = subType;
+    }
+
+    public Integer getHotelId()
+    {
+        return hotelId;
+    }
+
+    public void setHotelId(Integer hotelId)
+    {
+        this.hotelId = hotelId;
     }
 
     public String getDescription()

@@ -8,17 +8,21 @@ import backend.business.error.ErrorMessage;
 import backend.business.error.ServerException;
 import backend.db.dao.CategoryDAO;
 import backend.db.dao.CustomerAccountDetailsDAO;
+import backend.db.dao.HotelDAO;
 import backend.db.dao.MenuItemDAO;
 import backend.db.dao.MenuItemListDAO;
 import backend.db.dao.OrderDAO;
 import backend.db.dao.OrderDetailsDAO;
+import backend.db.dao.SubCategoryDAO;
 import backend.db.dao.TableDAO;
 import backend.db.entity.CategoryEntity;
 import backend.db.entity.CustomerAccountDetailsEntity;
+import backend.db.entity.HotelEntity;
 import backend.db.entity.MenuEntriesEntity;
 import backend.db.entity.MenuItemEntity;
 import backend.db.entity.OrderDetailsEntity;
 import backend.db.entity.OrderEntity;
+import backend.db.entity.SubCategoryEntity;
 import backend.db.entity.TableEntity;
 
 @Service
@@ -31,6 +35,9 @@ public class EntryExistingValidator
     private CategoryDAO categoryDAO;
 
     @Autowired
+    private SubCategoryDAO subCategoryDAO;
+
+    @Autowired
     private MenuItemListDAO menuItemListDAO;
 
     @Autowired
@@ -38,6 +45,9 @@ public class EntryExistingValidator
 
     @Autowired
     private OrderDAO orderDAO;
+
+    @Autowired
+    private HotelDAO hotelDAO;
 
     @Autowired
     private CustomerAccountDetailsDAO customerAccountDetailsDAO;
@@ -55,6 +65,16 @@ public class EntryExistingValidator
         return category;
     }
 
+    public SubCategoryEntity getSubCategoryEntityFromId(Integer subCategoryId)
+    {
+        SubCategoryEntity subcategory = subCategoryDAO.findOne(subCategoryId);
+        if (subcategory == null)
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_NOT_FOUND));
+        }
+        return subcategory;
+    }
+
     public MenuItemEntity getMenuItemEntityFromId(Integer menuItemId)
     {
         MenuItemEntity menuItem = menuItemDAO.findOne(menuItemId);
@@ -62,7 +82,18 @@ public class EntryExistingValidator
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.MENU_ITEM_NOT_FOUND));
         }
+
         return menuItem;
+    }
+
+    public HotelEntity getHotelFromId(Integer hotelId)
+    {
+        HotelEntity hotel = hotelDAO.findOne(hotelId);
+        if(hotel == null)
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.HOTEL_NOT_FOUND));
+        }
+        return hotel;
     }
 
     public MenuEntriesEntity getMenuEntityFromId(Integer menuEntryId)

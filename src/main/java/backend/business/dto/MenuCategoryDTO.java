@@ -5,7 +5,8 @@ import java.util.List;
 public class MenuCategoryDTO
 {
     private CategoryDTO category;
-    private List<MenuItemDTO> menuItems;
+    private List<MenuItemDTO> vegMenuItems;
+    private List<MenuItemDTO> nonVegmenuItems;
     public CategoryDTO getCategory()
     {
         return category;
@@ -14,13 +15,21 @@ public class MenuCategoryDTO
     {
         this.category = category;
     }
-    public List<MenuItemDTO> getMenuItems()
+    public List<MenuItemDTO> getVegMenuItems()
     {
-        return menuItems;
+        return vegMenuItems;
     }
-    public void setMenuItems(List<MenuItemDTO> menuItems)
+    public void setVegMenuItems(List<MenuItemDTO> vegMenuItems)
     {
-        this.menuItems = menuItems;
+        this.vegMenuItems = vegMenuItems;
+    }
+    public List<MenuItemDTO> getNonVegmenuItems()
+    {
+        return nonVegmenuItems;
+    }
+    public void setNonVegmenuItems(List<MenuItemDTO> nonVegmenuItems)
+    {
+        this.nonVegmenuItems = nonVegmenuItems;
     }
 
 }

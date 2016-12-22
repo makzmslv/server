@@ -1,29 +1,51 @@
-package backend.business.dto;
+package backend.db.entity;
 
-public class CategoryDTO
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "SUB_CATEGORY")
+public class SubCategoryEntity
 {
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private int id;
 
-    private Integer subCategoryId;
-
+    @Column(name = "NAME")
     private String name;
 
+    @Column(name = "TYPE")
     private Integer type;
 
+    @Column(name = "SUB_TYPE")
     private Integer subType;
 
+    @Column(name = "DESCRIPTION")
     private String description;
 
+    @Column(name = "DISPLAY_RANK")
     private Integer displayRank;
 
+    @Column(name = "ACTIVE")
     private Boolean active;
 
-    public Integer getId()
+    @OneToOne
+    @JoinColumn(name = "REF_CATEGORY")
+    private CategoryEntity category;
+
+    public int getId()
     {
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(int id)
     {
         this.id = id;
     }
@@ -36,16 +58,6 @@ public class CategoryDTO
     public void setName(String name)
     {
         this.name = name;
-    }
-
-    public Integer getSubCategoryId()
-    {
-        return subCategoryId;
-    }
-
-    public void setSubCategoryId(Integer subCategoryId)
-    {
-        this.subCategoryId = subCategoryId;
     }
 
     public Integer getType()
@@ -66,6 +78,16 @@ public class CategoryDTO
     public void setSubType(Integer subType)
     {
         this.subType = subType;
+    }
+
+    public CategoryEntity getCategory()
+    {
+        return category;
+    }
+
+    public void setCategory(CategoryEntity category)
+    {
+        this.category = category;
     }
 
     public String getDescription()

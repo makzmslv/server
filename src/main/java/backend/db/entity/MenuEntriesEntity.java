@@ -27,8 +27,8 @@ public class MenuEntriesEntity implements Serializable
     private MenuItemEntity menuItem;
 
     @OneToOne
-    @JoinColumn(name = "REF_CATEGORY")
-    private CategoryEntity category;
+    @JoinColumn(name = "REF_SUB_CATEGORY")
+    private SubCategoryEntity subCategory;
 
     @OneToOne
     @JoinColumn(name = "REF_MENU_HOTEL")
@@ -64,14 +64,15 @@ public class MenuEntriesEntity implements Serializable
         this.menuItem = menuItem;
     }
 
-    public CategoryEntity getCategory()
+    public SubCategoryEntity getSubCategory()
     {
-        return category;
+        return subCategory;
     }
 
-    public void setCategory(CategoryEntity category)
+    public void setSubCategory(SubCategoryEntity subCategory)
     {
-        this.category = category;
+        this.subCategory = subCategory;
     }
+
 
 }

@@ -32,13 +32,25 @@
             <column name="NAME" type="VARCHAR(50)">
                 <constraints nullable="false" unique="true"/>
             </column>
+            <column name="TYPE" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SUB_TYPE" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
             <column name="REF_CATEGORY" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="COST" type="DECIMAL(4, 2)">
-                <constraints nullable="true"/>
+            <column name="DESCRIPTION" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAY_RANK" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACTIVE" type="BOOLEAN">
+                <constraints nullable="false"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint constraintName="FK_SUB_CATEGORY_REF_CATEGORY" baseTableName="SUB_CATEGORY" baseColumnNames="SUB_CATEGORY" referencedTableName="CATEGORY" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="FK_SUB_CATEGORY_REF_CATEGORY" baseTableName="SUB_CATEGORY" baseColumnNames="REF_CATEGORY" referencedTableName="CATEGORY" referencedColumnNames="ID"/>
     </changeSet>
 </databaseChangeLog>
