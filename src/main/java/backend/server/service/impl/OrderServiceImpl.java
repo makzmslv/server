@@ -152,14 +152,6 @@ public class OrderServiceImpl
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.INVALID_ORDER_STATUS));
         }
-        if (OrderStatus.ORDER_COMPLETED.getCode().equals(updateDTO.getStatus()))
-        {
-            List<OrderDetailsEntity> orderItems = orderDetailsDAO.findByOrderEntityAndStatusNotIn(orderEntity, OrderItemStatus.getOrderInProgresStatuses());
-            if (!orderItems.isEmpty())
-            {
-                throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_IN_PROGRESS));
-            }
-        }
         if (OrderStatus.getBillGeneratedForOrderStatuses().contains(updateDTO.getStatus()))
         {
             BillEntity bill = billDAO.findByOrderEntity(orderEntity);
