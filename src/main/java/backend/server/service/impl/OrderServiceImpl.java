@@ -92,6 +92,10 @@ public class OrderServiceImpl
             orderDetailsEntity.setCostOfItem(cost);
             orderDetailsEntity.setMenuItem(menuItemEntity);
             orderDetailsEntity.setOrder(orderEntity);
+            if(orderItem.getQuantity() == 0)
+            {
+                throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_ITEM_QUANTITY_CANNOT_BE_ZERO));
+            }
             orderDetailsEntity.setQuantity(orderItem.getQuantity());
             orderDetailsEntity.setTimestamp(DateTime.now().toDate());
             orderDetailsEntity.setStatus(OrderItemStatus.PLACED.getCode());
@@ -116,6 +120,11 @@ public class OrderServiceImpl
             OrderDetailsEntity orderDetailsEntity = validator.getOrderDetailsEntityId(orderItem.getOrderDetailsId());
             checkIfOrderItemCanBeUpdated(orderDetailsEntity, orderItem.getStatus());
             orderDetailsEntity.setStatus(orderItem.getStatus());
+            if(orderItem.getOrderDetailsQuantity() == 0)
+            {
+                throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_ITEM_QUANTITY_CANNOT_BE_ZERO));
+            }
+            orderDetailsEntity.setQuantity(orderItem.getOrderDetailsQuantity());
             orderDetailsEntity = orderDetailsDAO.save(orderDetailsEntity);
             orderDetailsDTOs.add(mapper.map(orderDetailsEntity, OrderDetailsDTO.class));
         }
@@ -125,7 +134,7 @@ public class OrderServiceImpl
     public List<OrderDetailsDTO> getOrderItems(Integer orderId)
     {
         OrderEntity orderEntity = validator.getOrderEntityFromId(orderId);
-        List<OrderDetailsEntity> orderItems = orderDetailsDAO.findByOrderEntity(orderEntity);
+        List<OrderDetailsEntity> orderItems = orderDetailsDAO.findByOrderEntityAndStatus(orderEntity, OrderItemStatus.PLACED.getCode());
         return UtilHelper.mapListOfEnitiesToDTOs(mapper, orderItems, OrderDetailsDTO.class);
     }
 
@@ -176,7 +185,7 @@ public class OrderServiceImpl
         {
             DateTime timeOfOrder = new DateTime(orderDetailsEntity.getTimestamp());
             DateTime currentTime = DateTime.now();
-            DateTime timeAfterWhichOrderCannotBeCancelled = timeOfOrder.plusMinutes(5);
+            DateTime timeAfterWhichOrderCannotBeCancelled = timeOfOrder.plusMinutes(15);
             if (currentTime.isAfter(timeAfterWhichOrderCannotBeCancelled))
             {
                 throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_ITEM_CANNOT_UPDATED_DUE_TO_TIME_ELAPSED));

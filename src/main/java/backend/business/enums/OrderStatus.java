@@ -9,8 +9,9 @@ public enum OrderStatus
     CREATED(1),
     ITEMS_ORDERED(2),
     ORDER_COMPLETED(3),
-    BILL_GENERATED(4),
-    BILL_PAID(5);
+    ORDER_CANCELLED(4),
+    BILL_GENERATED(5),
+    BILL_PAID(6);
     // @formatter:off
     private Integer code;
 

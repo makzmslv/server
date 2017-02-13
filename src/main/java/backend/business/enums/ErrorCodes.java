@@ -46,6 +46,7 @@ public enum ErrorCodes
     ORDER_ITEM_CANNOT_UPDATED_AS_ALREADY_CANCELLED(506, "Order item cannot be updated as it is already cancelled"),
     ORDER_ITEM_CANNOT_UPDATED_DUE_TO_TIME_ELAPSED(507, "Order item cannot be updated after 5 minutes"),
     INVALID_ORDER_STATUS(508, "Invalid Order status for Bill generation"),
+    ORDER_ITEM_QUANTITY_CANNOT_BE_ZERO(509, "Order Item Quantity cannot be zero"),
 
     // bill
    BILL_ALREADY_EXISTS(601, "Bill already exists for order"),

@@ -10,6 +10,9 @@ public class OrderDetailsUpdateDTO
     @NotNull
     private Integer status;
 
+    @NotNull
+    private Integer quantity;
+
     public Integer getOrderDetailsId()
     {
         return orderDetailsId;
@@ -18,6 +21,16 @@ public class OrderDetailsUpdateDTO
     public void setOrderDetailsId(Integer orderDetailsId)
     {
         this.orderDetailsId = orderDetailsId;
+    }
+
+    public Integer getOrderDetailsQuantity()
+    {
+        return quantity;
+    }
+
+    public void setOrderDetailsQuantity(Integer quantity)
+    {
+        this.quantity = quantity;
     }
 
     public Integer getStatus()
