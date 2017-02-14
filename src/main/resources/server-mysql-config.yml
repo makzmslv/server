@@ -1,6 +1,6 @@
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/backend-server
+    url: jdbc:mysql://localhost:3306/server
     username: root
     password: neptune
