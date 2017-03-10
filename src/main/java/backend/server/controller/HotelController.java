@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import backend.business.dto.HotelCreateDTO;
+import backend.business.dto.OrderDTO;
 import backend.business.dto.HotelDTO;
 import backend.business.dto.MenuCreateDTO;
 import backend.business.dto.MenuDTO;
@@ -45,7 +46,7 @@ public class HotelController
     @PreAuthorize("hasRole('READ_ONLY')")
     @RequestMapping(value = "/{hotelId}/orders", method = RequestMethod.GET)
     @ResponseBody
-    public List<OrderDTO> getOrdersForHotel(@PathVariable Integer hotelId)
+    public List<OrderDTO> getOrdersForHotel(@PathVariable Integer   )
     {
         return hotelService.getOrdersForHotel(hotelId);
     }

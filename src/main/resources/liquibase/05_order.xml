@@ -16,12 +16,12 @@
             <column name="STATUS" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="REF_MENU_HOTEL" type="INTEGER">
+            <column name="REF_HOTEL" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
         </createTable>
         <addForeignKeyConstraint constraintName="FK_ORDER_REF_CUSTOMER_ACCOUNT_DETAILS" baseTableName="ORDERS" baseColumnNames="REF_CUSTOMER_ACCOUNT_DETAILS" referencedTableName="CUSTOMER_ACCOUNT_DETAILS" referencedColumnNames="ID"/>
-        <addForeignKeyConstraint constraintName="FK_MENU_REF_HOTEL_MENU" baseTableName="MENU_ITEM_LIST" baseColumnNames="REF_MENU_HOTEL" referencedTableName="MENU_HOTEL" referencedColumnNames="ID"/>
+        <addForeignKeyConstraint constraintName="FK_ORDER_REF_HOTEL" baseTableName="ORDERS" baseColumnNames="REF_HOTEL" referencedTableName="HOTELS" referencedColumnNames="ID"/>
     </changeSet>
 
     <!-- ORDER_DETAILS -->

@@ -29,6 +29,7 @@ import backend.db.entity.CustomerAccountDetailsEntity;
 import backend.db.entity.MenuItemEntity;
 import backend.db.entity.OrderDetailsEntity;
 import backend.db.entity.OrderEntity;
+import backend.db.entity.HotelEntity;
 
 @Service
 @Transactional
@@ -53,7 +54,7 @@ public class OrderServiceImpl
     {
         CustomerAccountDetailsEntity customerAccDetails = validator.getCustomerAccountDetailsEntity(createDTO.getUsername());
         checkIfOrderAlreadyInProgressForTable(customerAccDetails);
-        HotelEntity hotel = validator.getHotelFromId(createDTO.getHotelId())
+        HotelEntity hotel = validator.getHotelFromId(createDTO.getHotelId());
         OrderEntity orderEntity = new OrderEntity();
         orderEntity.setHotel(hotel);
         orderEntity.setStatus(OrderStatus.CREATED.getCode());

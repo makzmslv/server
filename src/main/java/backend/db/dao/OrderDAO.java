@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import backend.db.entity.CustomerDetailsEntity;
 import backend.db.entity.OrderEntity;
+import backend.db.entity.HotelEntity;
 
 public interface OrderDAO extends JpaRepository<OrderEntity, Integer>
 {

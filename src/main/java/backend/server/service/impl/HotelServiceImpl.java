@@ -12,12 +12,16 @@ import org.springframework.stereotype.Service;
 
 import backend.business.dto.HotelCreateDTO;
 import backend.business.dto.HotelDTO;
+import backend.business.dto.OrderDTO;
 import backend.business.dto.HotelMenuDTO;
 import backend.business.library.UtilHelper;
 import backend.db.dao.HotelDAO;
 import backend.db.dao.HotelMenuDAO;
+import backend.db.dao.OrderDAO;
 import backend.db.entity.HotelEntity;
 import backend.db.entity.HotelMenuEntity;
+import backend.db.entity.OrderEntity;
+import backend.server.service.impl.EntryExistingValidator;
 
 @Service
 public class HotelServiceImpl
@@ -30,6 +34,10 @@ public class HotelServiceImpl
 
     @Autowired
     private HotelMenuDAO hotelMenuDAO;
+
+    @Autowired
+    private EntryExistingValidator validator;
+
 
     @Autowired
     private Mapper mapper;
@@ -63,7 +71,7 @@ public class HotelServiceImpl
 
     public List<OrderDTO> getOrdersForHotel(Integer hotelId)
     {
-        HotelEntity hotel = validator.getHotelFromId(createDTO.getHotelId())
+        HotelEntity hotel = validator.getHotelFromId(hotelId);
         List<OrderEntity> orders = orderDAO.findByHotel(hotel);
         return UtilHelper.mapListOfEnitiesToDTOs(mapper, orders, OrderDTO.class);
     }
