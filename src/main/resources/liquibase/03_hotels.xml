@@ -14,7 +14,7 @@
             <column name="NAME" type="VARCHAR(50)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="ADDRESS" type="VARCHAR(500)">
+            <column name="ADDRESS" type="VARCHAR(50)">
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="CONTACT_NO" type="DECIMAL(10, 0)">

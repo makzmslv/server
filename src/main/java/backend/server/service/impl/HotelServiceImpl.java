@@ -26,6 +26,9 @@ public class HotelServiceImpl
     private HotelDAO hotelDAO;
 
     @Autowired
+    private OrderDAO orderDAO;
+
+    @Autowired
     private HotelMenuDAO hotelMenuDAO;
 
     @Autowired
@@ -56,6 +59,13 @@ public class HotelServiceImpl
             hotels = hotelDAO.findAll(sort);
         }
         return UtilHelper.mapListOfEnitiesToDTOs(mapper, hotels, HotelDTO.class);
+    }
+
+    public List<OrderDTO> getOrdersForHotel(Integer hotelId)
+    {
+        HotelEntity hotel = validator.getHotelFromId(createDTO.getHotelId())
+        List<OrderEntity> orders = orderDAO.findByHotel(hotel);
+        return UtilHelper.mapListOfEnitiesToDTOs(mapper, orders, OrderDTO.class);
     }
 
     private HotelMenuDTO createHotelMenuEntry(HotelEntity hotel)

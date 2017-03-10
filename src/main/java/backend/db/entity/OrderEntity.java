@@ -33,6 +33,10 @@ public class OrderEntity implements Serializable
     @JoinColumn(name = "REF_CUSTOMER_ACCOUNT_DETAILS")
     private CustomerDetailsEntity customerDetails;
 
+    @ManyToOne
+    @JoinColumn(name = "REF_HOTEL")
+    private HotelEntity hotel;
+
     @OneToOne(mappedBy = "orderEntity", cascade = CascadeType.ALL)
     private BillEntity bill;
 
@@ -94,4 +98,13 @@ public class OrderEntity implements Serializable
         this.orderDetails = orderDetails;
     }
 
+    public HotelEntity getHotel()
+    {
+        return hotel;
+    }
+
+    public void setHotel(HotelEntity hotel)
+    {
+        this.hotel = hotel;
+    }
 }

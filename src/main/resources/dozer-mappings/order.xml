@@ -18,6 +18,11 @@
             <a>status</a>
             <b>status</b>
         </field>
+
+        <field>
+            <a>hotel.id</a>
+            <b>hotelId</b>
+        </field>
     </mapping>
 
     <!--                                  -->

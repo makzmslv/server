@@ -12,4 +12,6 @@ public interface OrderDAO extends JpaRepository<OrderEntity, Integer>
     public OrderEntity findByCustomerDetailsAndStatusNot(CustomerDetailsEntity customerAccDetails, Integer status);
 
     public List<OrderEntity> findByCustomerDetailsOrderByIdDesc(CustomerDetailsEntity customerAccDetails);
+
+    public List<OrderEntity> findByHotel(HotelEntity hotel);
 }

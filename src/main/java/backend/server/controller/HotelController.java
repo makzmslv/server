@@ -42,6 +42,14 @@ public class HotelController
         return menuService.getMenuEntriesForHotel(hotelId);
     }
 
+    @PreAuthorize("hasRole('READ_ONLY')")
+    @RequestMapping(value = "/{hotelId}/orders", method = RequestMethod.GET)
+    @ResponseBody
+    public List<OrderDTO> getOrdersForHotel(@PathVariable Integer hotelId)
+    {
+        return hotelService.getOrdersForHotel(hotelId);
+    }
+
     @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(value = "/{hotelId}/menus", method = RequestMethod.POST)
     @ResponseBody

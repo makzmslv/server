@@ -53,7 +53,9 @@ public class OrderServiceImpl
     {
         CustomerAccountDetailsEntity customerAccDetails = validator.getCustomerAccountDetailsEntity(createDTO.getUsername());
         checkIfOrderAlreadyInProgressForTable(customerAccDetails);
+        HotelEntity hotel = validator.getHotelFromId(createDTO.getHotelId())
         OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setHotel(hotel);
         orderEntity.setStatus(OrderStatus.CREATED.getCode());
         orderEntity.setCustomerDetails(customerAccDetails.getCustomerDetails());
         orderEntity = orderDAO.save(orderEntity);

@@ -50,6 +50,7 @@ public enum ErrorCodes
 
     // bill
    BILL_ALREADY_EXISTS(601, "Bill already exists for order"),
+   BILL_DOES_NOT_EXISTS(601, "Bill not found for order"),
 
    //user
    CUSTOMER_NOT_FOUND(801, "Customer with given name does not exist"),

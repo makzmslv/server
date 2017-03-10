@@ -55,6 +55,11 @@ public class BillServiceImpl
     {
         OrderEntity orderEntity = validator.getOrderEntityFromId(orderId);
         BillEntity bill = billDAO.findByOrderEntity(orderEntity);
+        if(bill == null)
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.BILL_DOES_NOT_EXISTS));
+        }
+
         return mapper.map(bill, BillDTO.class);
     }
 

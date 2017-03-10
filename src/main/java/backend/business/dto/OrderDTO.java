@@ -6,6 +6,8 @@ public class OrderDTO
 
     private Integer status;
 
+    private Integer hotelId;
+
     private Integer tableNo;
 
     public Integer getId()
@@ -36,5 +38,15 @@ public class OrderDTO
     public void setTableNo(Integer tableNo)
     {
         this.tableNo = tableNo;
+    }
+
+    public Integer getHotelId()
+    {
+        return hotelId;
+    }
+
+    public void setHotelId(Integer hotelId)
+    {
+        this.hotelId = hotelId;
     }
 }
