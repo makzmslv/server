@@ -2,6 +2,7 @@ package backend.server.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,11 +30,11 @@ public class SecurityConfiguration extends GlobalAuthenticationConfigurerAdapter
     {
         return new LoginAuthenticationImpl();
     }
-    
+
     @Bean(name = "passwordEncoder")
     public PasswordEncoder passwordEncoder()
     {
-    	return new ShaPasswordEncoder();
+        return new ShaPasswordEncoder();
     }
 }
 
@@ -45,7 +46,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
-        http.authorizeRequests().antMatchers("/").hasAnyRole("READ_ONLY", "ACCESS_ALL").anyRequest().authenticated().and().httpBasic().and().csrf().disable();
+        http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/").permitAll().antMatchers("/resources/**").permitAll().antMatchers("/").hasAnyRole("READ_ONLY", "ACCESS_ALL")
+                .anyRequest().authenticated().and().httpBasic();
     }
 
 }
