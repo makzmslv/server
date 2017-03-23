@@ -49,8 +49,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter
     {
         http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/").permitAll().antMatchers("/resources/**").permitAll().antMatchers("/").hasAnyRole("READ_ONLY", "ACCESS_ALL")
                 .anyRequest().authenticated().and().httpBasic();
-        http.addFilterBefore(new SimpleCORSFilter(), UsernamePasswordAuthenticationFilter.class);
-        // http.addFilterBefore(new CorsFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new CorsFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 }

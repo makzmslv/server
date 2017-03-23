@@ -21,10 +21,12 @@ public class CorsFilter extends OncePerRequestFilter
         if (request.getHeader(ORIGIN).equals("null"))
         {
             String origin = request.getHeader(ORIGIN);
-            response.setHeader("Access-Control-Allow-Origin", "*");// * or origin as u prefer
+
+            response.setHeader("Access-Control-Allow-Origin", origin);
             response.setHeader("Access-Control-Allow-Credentials", "true");
-            response.setHeader("Access-Control-Allow-Headers", request.getHeader("Access-Control-Request-Headers"));
-            response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+            response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+            response.setHeader("Access-Control-Allow-Headers",
+                    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         }
         if (request.getMethod().equals("OPTIONS"))
         {
