@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -48,6 +49,8 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter
     {
         http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/").permitAll().antMatchers("/resources/**").permitAll().antMatchers("/").hasAnyRole("READ_ONLY", "ACCESS_ALL")
                 .anyRequest().authenticated().and().httpBasic();
+        http.addFilterBefore(new SimpleCORSFilter(), UsernamePasswordAuthenticationFilter.class);
+        // http.addFilterBefore(new CorsFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 }
