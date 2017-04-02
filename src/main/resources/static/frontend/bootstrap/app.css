@@ -1,0 +1,38 @@
+/* app css stylesheet */
+
+#wrapper {
+    margin: 0 auto;
+    width: 500px;
+    margin-top: 50px;
+}
+
+.menu {
+    text-align: center;
+    list-style: none;
+    padding: 0 0 0.5em;
+    font-size: 40px;
+    font-weight: bolder;
+}
+
+.users {
+    list-style-type: none;
+    padding:0; margin:0;
+    column-count:13;
+    -webkit-column-count:13;
+    -moz-column-count:13;
+}
+
+.divider{
+    width:15px;
+    height:auto;
+    display:inline-block;
+}
+.selected {
+  background-color: red;
+}
+
+.checkboxList {
+    float: left;
+    position:relative;
+    width: 100px;
+}
