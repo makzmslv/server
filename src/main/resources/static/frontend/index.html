@@ -21,121 +21,121 @@
 
 
     <div class="container col-md-18" ng-controller="homeController">
-    	<div class="page-header ">
+        <div class="page-header ">
           <h1>My Comida</h1>
         </div>
-        
+
         <form class="form-horizontal" role="form" ng-show="screenOptions.showHotels">
-        	<h3>Hotels</h3>
-	        <div class="form-group">
-	            <label for="lastName" class="col-md-3 control-label" translate>Name</label>
-	            <div class="col-md-4">
-		            <input id="name" type="text" class="form-control" ng-model="searchParameters.name" ng-blur="">
-		        </div>
-	            <label for="lastName" class="col-md-3 control-label" translate>Area</label>
-	            <div class="col-md-4">
-		            <input id="area" type="text" class="form-control" ng-model="searchParameters.area" ng-blur="">
-		        </div>
-	            <div class="col-md-1">
-		            <button type="submit" class="btn btn-primary" ng-click="getHotels()"><span translate>Search</span></button>
-		        </div>
-	        </div>
-	    </form>
-        
-    	
-	    <div ng-show="screenOptions.showHotels && hotels != null">
-	    	<div class="row">
-		        <div class="col-md-12"><hr/></div>
-		        <div class="col-md-2"></div>
-		        <div class="col-md-8">
-		            <table class="table table-hover table-condensed table-borderless">
-		                <thead>
-		                    <tr>
-		                        <th class="col-md-2">Hotel Name</th>
-		                        <th class="col-md-2">Address</th>
-		                        <th class="col-md-1">Area</th>
-		                        <th class="col-md-1">Contact No</th>
-		                    </tr>
-		                </thead>
-		                <tbody>
-		                    <tr ng-repeat="hotel in hotels">
-		                        <td  class="col-md-2" ng-click="getOrders(hotel)"><a href="">{{hotel.name}}</a></td>
-		                        <td class="col-md-2">{{hotel.address}}</td>
-		                        <td class="col-md-1">{{hotel.area}}</td>
-		                        <td class="col-md-1">{{hotel.contactNo}}</td>
-		                    </tr>
-		                </tbody>
-		                </table>
-		        </div>
-		        <div class="col-md-2"></div>
-		    </div>
-	    </div>
-    
-	    <div ng-show="screenOptions.showOrders">
-	    	<div class="row" >
-				<h3>Orders For {{screenOptions.selectedHotel.name}}</h3>
-		        <div class="col-md-12"><hr/></div>
-		        <div class="col-md-2"></div>
-		        <div class="col-md-8">
-		            <table class="table table-hover table-condensed table-borderless">
-		                <thead>
-		                    <tr>
-		                        <th class="col-md-2">Order No</th>
-		                        <th class="col-md-2">Status</th>
-		                    </tr>
-		                </thead>
-		                <tbody>
-		                    <tr ng-repeat="order in orders">
-		                        <td  class="col-md-2" ng-click="getOrderDetails(order)"><a href="">{{order.id}}</a></td>
-		                        <td class="col-md-2">{{order.status}}</td>
-		                    </tr>
-		                </tbody>
-		                </table>
-		        </div>
-		        <div class="col-md-2"></div>
-		    </div>
-		    <div class="row">
-		    	<button class="btn btn-primary" ng-click="goBacktoHotels()"><span translate>Back To Hotels</span></button>
-		    </div>
-	    </div>
-	    
-	    <div ng-show="screenOptions.showOrderDetails">
-	    	<div class="row">
-	    		<h3>{{screenOptions.selectedHotel.name}}</h3>
-		    	<h3>Order Details For Order No {{screenOptions.selectedOrder.orderId}}</h3>
-		        <div class="col-md-12"><hr/></div>
-		        <div class="col-md-2"></div>
-		        <div class="col-md-8">
-		            <table class="table table-hover table-condensed table-borderless">
-		                <thead>
-		                    <tr>
-		                        <th class="col-md-2">Item No</th>
-		                        <th class="col-md-2">Status</th>
-		                        <th class="col-md-2">Item Name</th>
-		                        <th class="col-md-2">Quantity</th>
-		                        <th class="col-md-2">Cost</th>
-		                        <th class="col-md-2">Timestamp</th>
-		                    </tr>
-		                </thead>
-		                <tbody>
-		                    <tr ng-repeat="orderDetail in orderDetails">
-		                        <td  class="col-md-2" ng-click="">{{orderDetail.orderId}}</td>
-		                        <td class="col-md-2">{{orderDetail.status}}</td>
-		                        <td class="col-md-2">{{orderDetail.menuItem.name}}</td>
-		                        <td class="col-md-2">{{orderDetail.quantity}}</td>
-		                        <td class="col-md-2">{{orderDetail.cost}}</td>
-		                        <td class="col-md-2">{{orderDetail.timestamp}}</td>
-		                    </tr>
-		                </tbody>
-		                </table>
-		        </div>
-		        <div class="col-md-2"></div>
-		    </div>
-		    <div class="row">
-		    	<button class="btn btn-primary" ng-click="goBacktoOrders()"><span translate>Back To Orders</span></button>
-		    </div>
-	    </div> 
-	</div>
+            <h3>Hotels</h3>
+            <div class="form-group">
+                <label for="lastName" class="col-md-3 control-label" translate>Name</label>
+                <div class="col-md-4">
+                    <input id="name" type="text" class="form-control" ng-model="searchParameters.name" ng-blur="">
+                </div>
+                <label for="lastName" class="col-md-3 control-label" translate>Area</label>
+                <div class="col-md-4">
+                    <input id="area" type="text" class="form-control" ng-model="searchParameters.area" ng-blur="">
+                </div>
+                <div class="col-md-1">
+                    <button type="submit" class="btn btn-primary" ng-click="getHotels()"><span translate>Search</span></button>
+                </div>
+            </div>
+        </form>
+
+
+        <div ng-show="screenOptions.showHotels && hotels != null">
+            <div class="row">
+                <div class="col-md-12"><hr/></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <table class="table table-hover table-condensed table-borderless">
+                        <thead>
+                            <tr>
+                                <th class="col-md-2">Hotel Name</th>
+                                <th class="col-md-2">Address</th>
+                                <th class="col-md-1">Area</th>
+                                <th class="col-md-1">Contact No</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="hotel in hotels">
+                                <td  class="col-md-2" ng-click="getOrders(hotel)"><a href="">{{hotel.name}}</a></td>
+                                <td class="col-md-2">{{hotel.address}}</td>
+                                <td class="col-md-1">{{hotel.area}}</td>
+                                <td class="col-md-1">{{hotel.contactNo}}</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+
+        <div ng-show="screenOptions.showOrders">
+            <div class="row" >
+                <h3>Orders For {{screenOptions.selectedHotel.name}}</h3>
+                <div class="col-md-12"><hr/></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <table class="table table-hover table-condensed table-borderless">
+                        <thead>
+                            <tr>
+                                <th class="col-md-2">Order No</th>
+                                <th class="col-md-2">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="order in orders">
+                                <td  class="col-md-2" ng-click="getOrderDetails(order)"><a href="">{{order.id}}</a></td>
+                                <td class="col-md-2">{{order.status}}</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row">
+                <button class="btn btn-primary" ng-click="goBacktoHotels()"><span translate>Back To Hotels</span></button>
+            </div>
+        </div>
+
+        <div ng-show="screenOptions.showOrderDetails">
+            <div class="row">
+                <h3>{{screenOptions.selectedHotel.name}}</h3>
+                <h3>Order Details For Order No {{screenOptions.selectedOrder.orderId}}</h3>
+                <div class="col-md-12"><hr/></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <table class="table table-hover table-condensed table-borderless">
+                        <thead>
+                            <tr>
+                                <th class="col-md-2">Item No</th>
+                                <th class="col-md-2">Status</th>
+                                <th class="col-md-2">Item Name</th>
+                                <th class="col-md-2">Quantity</th>
+                                <th class="col-md-2">Cost</th>
+                                <th class="col-md-2">Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="orderDetail in orderDetails">
+                                <td  class="col-md-2" ng-click="">{{orderDetail.id}}</td>
+                                <td class="col-md-2">{{orderDetail.status}}</td>
+                                <td class="col-md-2">{{orderDetail.menuItem.name}}</td>
+                                <td class="col-md-2">{{orderDetail.quantity}}</td>
+                                <td class="col-md-2">{{orderDetail.cost}}</td>
+                                <td class="col-md-2">{{orderDetail.timestamp}}</td>
+                            </tr>
+                        </tbody>
+                        </table>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+            <div class="row">
+                <button class="btn btn-primary" ng-click="goBacktoOrders()"><span translate>Back To Orders</span></button>
+            </div>
+        </div>
+    </div>
 
 
 
