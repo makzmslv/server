@@ -27,17 +27,17 @@ public class CustomerAccountController
     @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseBody
-    public CustomerDetailsDTO getMenuEntriesForHotel(@Valid @RequestBody CustomerDetailsDTO inputDTO)
+    public CustomerDetailsDTO createCustomer(@Valid @RequestBody CustomerDetailsDTO inputDTO)
     {
         return customerAccountServiceImpl.createCustomerAccountDetails(inputDTO);
     }
     
     @PreAuthorize("hasRole('READ_ONLY')")
-    @RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     @ResponseBody
-    public CustomerDetailsDTO getCustomer(@PathVariable Integer userId)
+    public CustomerDetailsDTO getCustomerByUsername(@PathVariable String username)
     {
-        return customerAccountServiceImpl.getCustomer(userId);
+        return customerAccountServiceImpl.getCustomerByUsername(username);
     }
 
 }

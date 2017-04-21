@@ -46,6 +46,17 @@ public class CustomerAccountServiceImpl
 		return  customerDetailsDTO;
 	}
 	
+	public CustomerDetailsDTO getCustomerByUsername(String username)
+	{
+		System.out.println(username);
+		CustomerDetailsEntity customerAccDetails = customerDetailsDAO.findByLoginDetails_UserName(username);
+		System.out.println(customerAccDetails);
+		CustomerDetailsDTO customerDetailsDTO = mapper.map(customerAccDetails, CustomerDetailsDTO.class);
+		customerDetailsDTO.setUsername(customerAccDetails.getLoginDetails().getUserName());
+		customerDetailsDTO.setPassword(customerAccDetails.getLoginDetails().getPassword());
+		return  customerDetailsDTO;
+	}
+	
 	private Integer generateResgistrationId(CustomerDetailsEntity customerAccDetails) {
 		boolean validIdGenerated = false;
 		Integer registrationId = 0;

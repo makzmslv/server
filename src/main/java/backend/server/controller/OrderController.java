@@ -45,6 +45,14 @@ public class OrderController
     {
         return orderService.getOrder(orderId);
     }
+    
+    @PreAuthorize("hasRole('ACCESS_ALL')")
+    @RequestMapping(value = "/customer/{customerId}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<OrderDTO> getOrders(@PathVariable Integer customerId)
+    {
+        return orderService.getOrders(customerId);
+    }
 
     @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(value = "/{orderId}/orderDetails", method = RequestMethod.GET)

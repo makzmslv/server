@@ -22,10 +22,12 @@ import backend.business.error.ErrorMessage;
 import backend.business.error.ServerException;
 import backend.business.library.UtilHelper;
 import backend.db.dao.BillDAO;
+import backend.db.dao.CustomerDetailsDAO;
 import backend.db.dao.OrderDAO;
 import backend.db.dao.OrderDetailsDAO;
 import backend.db.entity.BillEntity;
 import backend.db.entity.CustomerAccountDetailsEntity;
+import backend.db.entity.CustomerDetailsEntity;
 import backend.db.entity.MenuItemEntity;
 import backend.db.entity.OrderDetailsEntity;
 import backend.db.entity.OrderEntity;
@@ -44,6 +46,9 @@ public class OrderServiceImpl
     @Autowired
     private BillDAO billDAO;
 
+    @Autowired
+	private CustomerDetailsDAO customerDetailsDAO;
+    
     @Autowired
     private EntryExistingValidator validator;
 
@@ -67,6 +72,13 @@ public class OrderServiceImpl
     {
         OrderEntity orderEntity = validator.getOrderEntityFromId(orderId);
         return mapper.map(orderEntity, OrderDTO.class);
+    }
+    
+    public List<OrderDTO> getOrders(Integer customerId)
+    {
+    	CustomerDetailsEntity customer = customerDetailsDAO.findOne(customerId);
+        List<OrderEntity> orderEntity = orderDAO.findByCustomerDetailsOrderByIdDesc(customer);
+        return UtilHelper.mapListOfEnitiesToDTOs(mapper, orderEntity, OrderDTO.class);
     }
 
     public OrderDTO updateOrderStatus(Integer orderId, OrderUpdateDTO updateDTO)
