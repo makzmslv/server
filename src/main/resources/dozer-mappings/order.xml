@@ -18,6 +18,18 @@
             <a>status</a>
             <b>status</b>
         </field>
+        <field>
+            <a>customerDetails.name</a>
+            <b>nameOfCustomer</b>
+        </field>
+        <field>
+            <a>customerDetails.contactNo</a>
+            <b>contactNo</b>
+        </field>
+        <field>
+            <a>customerDetails.address</a>
+            <b>address</b>
+        </field>
 
         <field>
             <a>hotel.id</a>

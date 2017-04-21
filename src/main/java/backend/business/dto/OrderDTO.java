@@ -1,5 +1,7 @@
 package backend.business.dto;
 
+import java.math.BigDecimal;
+
 public class OrderDTO
 {
     private Integer id;
@@ -9,6 +11,42 @@ public class OrderDTO
     private Integer hotelId;
 
     private Integer tableNo;
+
+    private String nameOfCustomer;
+
+    private BigDecimal contactNo;
+
+    private String address;
+
+    public String getNameOfCustomer()
+    {
+        return nameOfCustomer;
+    }
+
+    public void setNameOfCustomer(String nameOfCustomer)
+    {
+        this.nameOfCustomer = nameOfCustomer;
+    }
+
+    public BigDecimal getContactNo()
+    {
+        return contactNo;
+    }
+
+    public void setContactNo(BigDecimal contactNo)
+    {
+        this.contactNo = contactNo;
+    }
+
+    public String getAddress()
+    {
+        return address;
+    }
+
+    public void setAddress(String address)
+    {
+        this.address = address;
+    }
 
     public Integer getId()
     {
