@@ -40,7 +40,7 @@
             <column name="ID" type="INTEGER" autoIncrement="true">
                 <constraints primaryKey="true" primaryKeyName="CUSTOMER_ACCOUNT_DETAILS_PK" nullable="false"/>
             </column>
-            <column name="USERNAME" type="VARCHAR(50)">
+            <column name="uName" type="VARCHAR(50)">
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="PASSWORD" type="VARCHAR(50)">
@@ -68,7 +68,7 @@
             <column name="REGISTRATION_ID" valueNumeric="0" />
         </insert>
         <insert tableName="CUSTOMER_ACCOUNT_DETAILS">
-            <column name="USERNAME" value="defaultUser" />
+            <column name="uName" value="defaultUser" />
             <column name="PASSWORD" value="5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8" />
             <column name="VERIFIED" valueNumeric="1" />
             <column name="ROLE" valueNumeric="1" />

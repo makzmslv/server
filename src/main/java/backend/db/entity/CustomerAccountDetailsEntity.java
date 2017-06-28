@@ -18,7 +18,7 @@ public class CustomerAccountDetailsEntity
     @Column(name = "ID")
     private int id;
 
-    @Column(name = "USERNAME")
+    @Column(name = "uNAME")
     private String userName;
 
     @Column(name = "PASSWORD")
