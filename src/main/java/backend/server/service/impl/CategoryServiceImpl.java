@@ -183,8 +183,8 @@ public class CategoryServiceImpl
     private void checkIfDuplicateEntryExists(CategoryCreateDTO createDTO)
     {
         CategoryEntity category = categoryDAO.findByName(createDTO.getName());
-        SubCategoryEntity subCategory = subCategoryDAO.findByCategoryAndTypeAndSubType(category, createDTO.getType(), createDTO.getSubType());
-        if (subCategory != null)
+        List<SubCategoryEntity> subCategory = subCategoryDAO.findByCategoryAndTypeAndSubType(category, createDTO.getType(), createDTO.getSubType());
+        if (!subCategory.isEmpty())
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.CATEGORY_ALREADY_EXISTS));
         }

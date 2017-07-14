@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -36,7 +36,7 @@ public class SubCategoryEntity
     @Column(name = "ACTIVE")
     private Boolean active;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "REF_CATEGORY")
     private CategoryEntity category;
 

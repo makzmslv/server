@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.Api;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -20,7 +22,6 @@ import backend.business.dto.OrderDetailsDTO;
 import backend.business.dto.OrderDetailsUpdateDTO;
 import backend.business.dto.OrderUpdateDTO;
 import backend.server.service.impl.OrderServiceImpl;
-import io.swagger.annotations.Api;
 
 @Api(value = "orders", description = "orders")
 @Controller
@@ -39,13 +40,21 @@ public class OrderController
     }
 
     @PreAuthorize("hasRole('ACCESS_ALL')")
+    @RequestMapping(value = "/{orderId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteOrder(@PathVariable Integer orderId)
+    {
+        orderService.deleteOrder(orderId);
+    }
+
+    @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(value = "/{orderId}", method = RequestMethod.GET)
     @ResponseBody
     public OrderDTO getOrder(@PathVariable Integer orderId)
     {
         return orderService.getOrder(orderId);
     }
-    
+
     @PreAuthorize("hasRole('ACCESS_ALL')")
     @RequestMapping(value = "/customer/{customerId}", method = RequestMethod.GET)
     @ResponseBody

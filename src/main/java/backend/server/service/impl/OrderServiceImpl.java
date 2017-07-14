@@ -28,10 +28,10 @@ import backend.db.dao.OrderDetailsDAO;
 import backend.db.entity.BillEntity;
 import backend.db.entity.CustomerAccountDetailsEntity;
 import backend.db.entity.CustomerDetailsEntity;
+import backend.db.entity.HotelEntity;
 import backend.db.entity.MenuItemEntity;
 import backend.db.entity.OrderDetailsEntity;
 import backend.db.entity.OrderEntity;
-import backend.db.entity.HotelEntity;
 
 @Service
 @Transactional
@@ -47,8 +47,8 @@ public class OrderServiceImpl
     private BillDAO billDAO;
 
     @Autowired
-	private CustomerDetailsDAO customerDetailsDAO;
-    
+    private CustomerDetailsDAO customerDetailsDAO;
+
     @Autowired
     private EntryExistingValidator validator;
 
@@ -73,10 +73,23 @@ public class OrderServiceImpl
         OrderEntity orderEntity = validator.getOrderEntityFromId(orderId);
         return mapper.map(orderEntity, OrderDTO.class);
     }
-    
+
+    public void deleteOrder(Integer orderId)
+    {
+        OrderEntity orderEntity = validator.getOrderEntityFromId(orderId);
+        if (orderEntity != null)
+        {
+            orderDAO.delete(orderId);
+        }
+        else
+        {
+            throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_DOES_NOT_EXIST));
+        }
+    }
+
     public List<OrderDTO> getOrders(Integer customerId)
     {
-    	CustomerDetailsEntity customer = customerDetailsDAO.findOne(customerId);
+        CustomerDetailsEntity customer = customerDetailsDAO.findOne(customerId);
         List<OrderEntity> orderEntity = orderDAO.findByCustomerDetailsOrderByIdDesc(customer);
         return UtilHelper.mapListOfEnitiesToDTOs(mapper, orderEntity, OrderDTO.class);
     }
@@ -107,7 +120,7 @@ public class OrderServiceImpl
             orderDetailsEntity.setCostOfItem(cost);
             orderDetailsEntity.setMenuItem(menuItemEntity);
             orderDetailsEntity.setOrder(orderEntity);
-            if(orderItem.getQuantity() == 0)
+            if (orderItem.getQuantity() == 0)
             {
                 throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_ITEM_QUANTITY_CANNOT_BE_ZERO));
             }
@@ -135,7 +148,7 @@ public class OrderServiceImpl
             OrderDetailsEntity orderDetailsEntity = validator.getOrderDetailsEntityId(orderItem.getOrderDetailsId());
             checkIfOrderItemCanBeUpdated(orderDetailsEntity, orderItem.getStatus());
             orderDetailsEntity.setStatus(orderItem.getStatus());
-            if(orderItem.getOrderDetailsQuantity() == 0)
+            if (orderItem.getOrderDetailsQuantity() == 0)
             {
                 throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_ITEM_QUANTITY_CANNOT_BE_ZERO));
             }
@@ -164,7 +177,7 @@ public class OrderServiceImpl
 
     private void checkIfOrderAlreadyCompleted(OrderEntity orderEntity)
     {
-        if (orderEntity.getStatus().equals(OrderStatus.BILL_PAID))
+        if (orderEntity.getStatus().equals(OrderStatus.BILL_PAID.getCode()))
         {
             throw new ServerException(new ErrorMessage(ErrorCodes.ORDER_COMPLETED));
         }

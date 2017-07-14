@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.Api;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,14 +16,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import backend.business.dto.CategoryDTO;
 import backend.business.dto.HotelCreateDTO;
-import backend.business.dto.OrderDTO;
 import backend.business.dto.HotelDTO;
 import backend.business.dto.MenuCreateDTO;
 import backend.business.dto.MenuDTO;
+import backend.business.dto.MenuItemDTO;
+import backend.business.dto.OrderDTO;
+import backend.business.dto.SubCategoryDTO;
 import backend.server.service.impl.HotelServiceImpl;
 import backend.server.service.impl.MenuServiceImpl;
-import io.swagger.annotations.Api;
 
 @Api(value = "hotel")
 @Controller
@@ -41,6 +45,30 @@ public class HotelController
     public MenuDTO getMenuEntriesForHotel(@PathVariable Integer hotelId)
     {
         return menuService.getMenuEntriesForHotel(hotelId);
+    }
+
+    @PreAuthorize("hasRole('READ_ONLY')")
+    @RequestMapping(value = "/{hotelId}/categories", method = RequestMethod.GET)
+    @ResponseBody
+    public List<CategoryDTO> getCategoriesForHotel(@PathVariable Integer hotelId)
+    {
+        return menuService.getCategoriesForHotel(hotelId);
+    }
+
+    @PreAuthorize("hasRole('READ_ONLY')")
+    @RequestMapping(value = "/categories/{categoryId}/subcategories", method = RequestMethod.GET)
+    @ResponseBody
+    public List<SubCategoryDTO> getSubCategoriesForHotel(@PathVariable Integer categoryId, @RequestParam(required = true) Integer subType)
+    {
+        return menuService.getSubCatgoeriesForHotel(categoryId, subType);
+    }
+
+    @PreAuthorize("hasRole('READ_ONLY')")
+    @RequestMapping(value = "/subcategories/{subcategoryId}/menuitems", method = RequestMethod.GET)
+    @ResponseBody
+    public List<MenuItemDTO> getMenuItemsForSubCategory(@PathVariable Integer subcategoryId)
+    {
+        return menuService.getMenuItemsForSubCategory(subcategoryId);
     }
 
     @PreAuthorize("hasRole('READ_ONLY')")
@@ -66,7 +94,7 @@ public class HotelController
     {
         return hotelService.createHotel(createDTO);
     }
-    
+
     @PreAuthorize("hasRole('READ_ONLY')")
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
