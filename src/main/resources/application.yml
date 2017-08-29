@@ -5,7 +5,11 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
-
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/server
+    username: root
+    password: root
 
 liquibase:
   enabled: true
